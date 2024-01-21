@@ -10,6 +10,7 @@ import {
   ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { FcGoogle } from "react-icons/fc";
 export default function Navbar(){
   const baseUrl="http://localhost:8080/";
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -89,6 +90,8 @@ export default function Navbar(){
               Create Account
             </Button>
             <Button onClick={onClose}>Cancel</Button>
+            <Text>OR</Text>
+            <Button onClick={Google}>Sign Up with Google</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

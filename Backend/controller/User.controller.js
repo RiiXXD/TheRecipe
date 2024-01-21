@@ -3,6 +3,8 @@ const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const UserModel=require("../models/User.model");
 const authorization=require("../middlewares/auth.middleware");
+const {passport} = require('../utils/google.auth')
+
 require('dotenv').config()
 const UserController=Router();
 UserController.get("/test",(req,res)=>{
@@ -71,7 +73,16 @@ UserController.post("/login",async (req,res)=>{
             
         
 })
+UserController.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile','email'] }));
 
+UserController.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login',session:false }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    
+    res.redirect('/');
+  });
 UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 
