@@ -1,5 +1,6 @@
 import { Button,ButtonGroup,Heading,Box,Flex, Spacer } from '@chakra-ui/react'
 import {
+  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -34,11 +35,13 @@ export default function Navbar(){
         "Content-Type": "application/json"
       },
     body: JSON.stringify({name,email,password})})
-    setisWaiting(false);
+    setisWaiting(false); 
   const data = await res.json();
   console.log(data);
   }
-  
+  const Google=()=>{
+    console.log("hey google");
+  }
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
@@ -90,9 +93,12 @@ export default function Navbar(){
               Create Account
             </Button>
             <Button onClick={onClose}>Cancel</Button>
-            <Text>OR</Text>
-            <Button onClick={Google}>Sign Up with Google</Button>
+            
+            
           </ModalFooter>
+          <Text align="center">OR</Text>
+           
+            <Button w="80%" m="1em auto" onClick={Google}><FcGoogle/> Sign Up with Google</Button>
         </ModalContent>
       </Modal>
       <Button colorScheme='teal'>Log in</Button>
