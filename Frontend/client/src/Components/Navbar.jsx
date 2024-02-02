@@ -39,8 +39,10 @@ export default function Navbar(){
   const data = await res.json();
   console.log(data);
   }
-  const Google=()=>{
-    console.log("hey google");
+  const Google=async ()=>{
+    // const data= await fetch("http://localhost:3000//user/auth/google");
+    // console.log(data);
+    window.open(`${baseUrl}user/auth/google`,"_self");
   }
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
@@ -98,7 +100,7 @@ export default function Navbar(){
           </ModalFooter>
           <Text align="center">OR</Text>
            
-            <Button w="80%" m="1em auto" onClick={Google}><FcGoogle/> Sign Up with Google</Button>
+            <Button w="80%" m="1em auto" onClick={Google} ><FcGoogle/> Sign Up with Google</Button>
         </ModalContent>
       </Modal>
       <Button colorScheme='teal'>Log in</Button>

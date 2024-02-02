@@ -3,7 +3,8 @@ const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const UserModel=require("../models/User.model");
 const authorization=require("../middlewares/auth.middleware");
-const {passport} = require('../utils/google.auth')
+const {passport} = require('../utils/google.auth');
+const { redirect } = require("react-router-dom");
 
 require('dotenv').config()
 const UserController=Router();
@@ -74,15 +75,23 @@ UserController.post("/login",async (req,res)=>{
         
 })
 UserController.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile','email'] }));
+  passport.authenticate('google', { scope: ['profile','email'] })
+  
+  );
 
 UserController.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login',session:false }),
   function(req, res) {
     // Successful authentication, redirect home.
-    
-    res.redirect('/');
-  });
+    const accessToken = req.user.tokens.access_token;
+    console.log('Successfully signed in')
+
+    // setTimeout(() => {
+    //   res.json({ req });
+    //   // res.redirect('/');
+    // }, 10000); 
+    res.json({accessToken});
+    });
 UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 
