@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
       existingUser.name = profile._json.name;
       existingUser.profileImg = profile._json.picture;
       await existingUser.save();
-      return cb(null, existingUser);
+      return cb(null,  { id: existingUser.id, name: existingUser.name, email: existingUser.email, profileImg: existingUser.profileImg });
 
     } 
     else{
@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
        await user.save();
        console.log(accessToken);
 
-        return cb(null, user);
+        return cb(null, { id: user.id, name: user.name, email: user.email, profileImg: user.profileImg });
 
     }}
     catch (error) {

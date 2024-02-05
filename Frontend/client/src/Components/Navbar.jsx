@@ -11,6 +11,7 @@ import {
   ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
 export default function Navbar(){
   const baseUrl="http://localhost:8080/";
@@ -22,6 +23,7 @@ export default function Navbar(){
   const[name,setName]=useState();
   const[email,setEmail]=useState();
   const[password,setPassword]=useState();
+  const[checkAuth,setCheckAuth]=useState();
   const handleNameChange = (e) => setName(e.target.value)
   const handleEmailChange = (e) => setEmail(e.target.value)
   const handlePasswordChange = (e) => setPassword(e.target.value)
@@ -39,11 +41,23 @@ export default function Navbar(){
   const data = await res.json();
   console.log(data);
   }
-  const Google=async ()=>{
-    // const data= await fetch("http://localhost:3000//user/auth/google");
-    // console.log(data);
+
+  const GoogleAuth= async()=>{
+    await Google();
+     
+  }
+  const Google= ()=>{
     window.open(`${baseUrl}user/auth/google`,"_self");
   }
+  const FetchUser=async()=>{
+
+    const data=await fetch("http://localhost:8080/login/sucess");
+    const response=await data.json();
+    console.log("response",response);
+  }
+  useEffect(()=>{
+    FetchUser();
+  },[])
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
@@ -100,7 +114,7 @@ export default function Navbar(){
           </ModalFooter>
           <Text align="center">OR</Text>
            
-            <Button w="80%" m="1em auto" onClick={Google} ><FcGoogle/> Sign Up with Google</Button>
+            <Button w="80%" m="1em auto" onClick={GoogleAuth} ><FcGoogle/> Sign Up with Google</Button>
         </ModalContent>
       </Modal>
       <Button colorScheme='teal'>Log in</Button>

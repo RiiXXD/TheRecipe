@@ -30,7 +30,7 @@ UserController.post("/sign",async(req,res)=>{
                 profileImg
             })
             await user.save();
-            res.json("User successfully registered!!:)");}
+            res.json({message:"user SignedUp",user:{ id:user._id,name, email, profileImg}});}
             else if(err){
                 res.json("Something went wrong try again")
                 console.log(err);
