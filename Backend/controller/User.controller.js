@@ -13,7 +13,6 @@ UserController.get("/test",(req,res)=>{
 })
 
 UserController.post("/sign",async(req,res)=>{
-    console.log(req.body,"req.body")
    const{name, email, password, profileImg}=req.body;
     try{
       const existingUser=await UserModel.findOne({email});
@@ -30,7 +29,9 @@ UserController.post("/sign",async(req,res)=>{
                 profileImg
             })
             await user.save();
-            res.json({message:"user SignedUp",user:{ id:user._id,name, email, profileImg}});}
+            const token=jwt.sign({userId:user._id},process.env.EncryptionKey);
+         
+            res.json({message:"user SignedUp",user:{ id:user._id,name, email, profileImg,token}})}
             else if(err){
                 res.json("Something went wrong try again")
                 console.log(err);
@@ -82,14 +83,8 @@ UserController.get('/auth/google',
 UserController.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login',session:false }),
   function(req, res) {
-    // Successful authentication, redirect home.
     const accessToken = req.user.tokens.access_token;
-    console.log('Successfully signed in')
-
-    // setTimeout(() => {
-    //   res.json({ req });
-    //   // res.redirect('/');
-    // }, 10000); 
+    console.log('Successfully signed in') 
     res.json({accessToken});
     });
 UserController.get("/edit",authorization,async (req,res)=>{

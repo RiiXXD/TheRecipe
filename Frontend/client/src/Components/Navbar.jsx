@@ -13,9 +13,11 @@ import {
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
+import  Login from "./Login"
 export default function Navbar(){
   const baseUrl="http://localhost:8080/";
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isLogOpen} = useDisclosure()
 
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
@@ -42,22 +44,14 @@ export default function Navbar(){
   console.log(data);
   }
 
-  const GoogleAuth= async()=>{
-    await Google();
+  const GoogleAuth= ()=>{
+     Google();
      
   }
   const Google= ()=>{
     window.open(`${baseUrl}user/auth/google`,"_self");
   }
-  const FetchUser=async()=>{
-
-    const data=await fetch("http://localhost:8080/login/sucess");
-    const response=await data.json();
-    console.log("response",response);
-  }
-  useEffect(()=>{
-    FetchUser();
-  },[])
+ 
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
@@ -66,7 +60,7 @@ export default function Navbar(){
     <ButtonGroup gap='2'>
       {/* <Button onclick={openForm} colorScheme='teal'>Sign Up</Button> */}
       <Button onClick={onOpen}>Sign Up</Button>
-      
+      <Login/>
 
       <Modal
         initialFocusRef={initialRef}
@@ -117,7 +111,7 @@ export default function Navbar(){
             <Button w="80%" m="1em auto" onClick={GoogleAuth} ><FcGoogle/> Sign Up with Google</Button>
         </ModalContent>
       </Modal>
-      <Button colorScheme='teal'>Log in</Button>
+      
     </ButtonGroup>
   </Flex>
 

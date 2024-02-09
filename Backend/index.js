@@ -1,6 +1,8 @@
 const express=require('express');
 const cors=require('cors');
 const UserController=require('./controller/User.controller')
+const RecipeController=require('./controller/Recipe.controller')
+const RecipeModel=require('./models/Recipe.model');
 const connection = require('./configs/db')
 require('dotenv').config()
 const app = express();
@@ -19,9 +21,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/user",UserController)
-app.get("/",(req,res)=>{
-  res.json(200);
-  console.log("hey /")
+app.use("/recipe",RecipeController)
+
+app.get("/", async (req,res)=>{
+  const posts = await RecipeModel.find();
+  res.status(200).json({posts});
+ 
 })
 app.get('/auth/google/callback', 
   passport.authenticate('google', {   successRedirect:"http://localhost:3000/",failureRedirect: '/login'}),
