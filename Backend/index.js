@@ -1,10 +1,14 @@
-const express=require('express');
 const cors=require('cors');
+const express=require('express');
+const multer = require('multer');
+
 const UserController=require('./controller/User.controller')
 const RecipeController=require('./controller/Recipe.controller')
 const RecipeModel=require('./models/Recipe.model');
 const connection = require('./configs/db')
+
 require('dotenv').config()
+
 const app = express();
 const session=require('express-session');
 const {passport} = require('./utils/google.auth')
@@ -17,12 +21,26 @@ app.use(session({
   saveUninitialized:true
 }))
 
+const storage = multer.diskStorage({
+  destination: function(req, file, callback) {
+    callback(null, '/src/my-images');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname);
+  }
+});
+const upload = multer({ storage: storage });
+
 // setuppassport
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/user",UserController)
 app.use("/recipe",RecipeController)
-
+app.post('/upload', upload.single('recipeImage'), (req, res) => {
+  // Access uploaded file via req.file
+  // Process the uploaded file (e.g., save it to the database or perform further validation)
+  res.json({ message: 'File uploaded successfully', filename: req.file.filename });
+});
 app.get("/", async (req,res)=>{
   const posts = await RecipeModel.find();
   res.status(200).json({posts});

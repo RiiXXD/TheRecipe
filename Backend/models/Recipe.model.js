@@ -8,6 +8,7 @@ const RecipeSchema=mongoose.Schema(
         ref: "UserModel",
     },
     ingredients: [String],
+    url:{type:String,},
     instructions: String,
     prep_time: String,
     cook_time: String,

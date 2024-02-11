@@ -13,12 +13,16 @@ export default function Home(){
       }
       useEffect(()=>{
         getRecipe();
+        
       },[])
     return <>
     <Navbar/>
-    {/* <RecipeForm/> */}
+    <RecipeForm/>
    { recipes && recipes.map((rec,index)=>{
-    return <div key={index}><h1 >{rec.title}</h1></div>
+    return <div key={index}><h1 >{rec.title}</h1>
+    {/* <img width="50%" src={rec.url}></img> */}
+    <p>{}</p>
+    </div>
    })}
     </>
 }
