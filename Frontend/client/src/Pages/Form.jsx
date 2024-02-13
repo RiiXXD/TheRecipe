@@ -9,14 +9,15 @@ function RecipeForm() {
     // const [authorId,setAuthorId] = useState('');
     const [ingredients, setIngredients] = useState(['']); // Initial state with one empty ingredient field
    const [instructions,setInstructions] = useState('');
+   const [totalTime,setTotalTime] = useState('');
    const[url,setUrl] = useState("");
    const [prepTime,setPreptime] = useState(0);
    const [cookTime,setCookTime] = useState(0);
-   const[servings,SetServings] = useState('');
+   const[servings,setServings] = useState('');
    const[isWaiting,setIsWaiting] = useState(false);
    const baseUrl="http://localhost:8080/";
-   
-  let totalTime=parseInt(prepTime)+parseInt(cookTime);
+   let total=0;
+  //  settotalTime(parseInt(prepTime)+parseInt(cookTime));
    const handleIngredientChange = (index, event) => {
     const newIngredients = [...ingredients];
     newIngredients[index] = event.target.value;
@@ -65,7 +66,7 @@ const handleSubmit = async(event) => {
   setInstructions("");
   setPreptime(0);
   setCookTime(0);
-  SetServings("");
+  setServings("");
 }
 
 // const postRecipe=()=>{
@@ -77,7 +78,7 @@ const handleSubmit = async(event) => {
     <FormLabel my={"1em"}>Title</FormLabel>
     <Input placeholder='Your Recipe Title ' type='text' value={title} onChange={(e)=>{setTitle(e.target.value)}} />
     <FormLabel my={"1em"}>Recipe Image URL</FormLabel>
-    <Input type="text" value={url} name="recipeImage"/>
+    <Input type="text" value={url} onChange={(e)=>{setUrl(e.target.value)}}name="recipeImage"/>
     
     <FormLabel my={"1em"}>Ingredients</FormLabel>
     {
@@ -103,16 +104,16 @@ const handleSubmit = async(event) => {
    <Flex justify={"space-between"} > 
        <Box>
     <FormLabel my={"1em"}>Total Time (Minutes)</FormLabel>
-    <Input type='number'  value={totalTime} onChange={(e)=>{setTitle(e.target.value)}}/>
+    <Input type='number'  value={totalTime}/>
     <FormLabel my={"1em"}>PrepTime (Minutes)</FormLabel>
-    <Input type='number'  value={prepTime} onChange={(e)=>{setPreptime(e.target.value)}}/>
+    <Input type='number'  value={prepTime} onChange={(e)=>{setPreptime(e.target.value); setTotalTime(parseInt(e.target.value)+total)}}/>
 
     </Box>
     <Box>
     <FormLabel my={"1em"}>Cook Time (Minutes)</FormLabel>
     <Input type='number' value={cookTime} onChange={(e)=>{setCookTime(e.target.value)}}/>
     <FormLabel my={"1em"}>Servings</FormLabel>
-    <Input type='number'  value={servings} onChange={(e)=>{SetServings(e.target.value)}}/>
+    <Input type='number'  value={servings} onChange={(e)=>{setServings(e.target.value)}}/>
     </Box>
     </Flex>
     <Button

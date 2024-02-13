@@ -44,14 +44,19 @@ export default function Navbar(){
   console.log(data);
   }
 
-  const GoogleAuth= ()=>{
+  const GoogleAuth= async ()=>{
      Google();
-     
   }
   const Google= ()=>{
     window.open(`${baseUrl}user/auth/google`,"_self");
+    
   }
- 
+//  const handleAuth=async()=>{
+//    const data=await fetch(`${baseUrl}user/auth/google/callback`)
+//    const res=await data.json();
+//    console.log(res);
+//  }
+
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>

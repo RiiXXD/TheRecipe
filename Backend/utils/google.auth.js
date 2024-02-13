@@ -1,3 +1,6 @@
+const bcrypt=require("bcrypt");
+const jwt=require("jsonwebtoken");
+
 const passport=require('passport');
 const UserModel=require("../models/User.model");
 const { v4: uuidv4 } = require('uuid');
@@ -16,7 +19,10 @@ passport.use(new GoogleStrategy({
       existingUser.name = profile._json.name;
       existingUser.profileImg = profile._json.picture;
       await existingUser.save();
-      return cb(null,  { id: existingUser.id, name: existingUser.name, email: existingUser.email, profileImg: existingUser.profileImg });
+      const token=jwt.sign({userId:existingUser._id},process.env.EncryptionKey);
+      // res.json({msg:"Succesfully login ",token})
+      console.log("token",token);
+      return cb(null,  { id: existingUser.id, name: existingUser.name, email: existingUser.email, profileImg: existingUser.profileImg ,token});
 
     } 
     else{
@@ -29,7 +35,7 @@ passport.use(new GoogleStrategy({
        await user.save();
        console.log(accessToken);
 
-        return cb(null, { id: user.id, name: user.name, email: user.email, profileImg: user.profileImg });
+        return cb(null, { id: user.id, name: user.name, email: user.email, profileImg: user.profileImg ,token:accessToken });
 
     }}
     catch (error) {

@@ -80,13 +80,17 @@ UserController.get('/auth/google',
   
   );
 
-UserController.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login',session:false }),
-  function(req, res) {
-    const accessToken = req.user.tokens.access_token;
-    console.log('Successfully signed in') 
-    res.json({accessToken});
-    });
+  UserController.get('/auth/google/callback', 
+    passport.authenticate('google', { failureRedirect: '/login',session:false }),
+    function(req, res) {
+      // const accessToken = req.user.tokens.access_token;
+      console.log('Successfully signed in');
+      console.log('Token:', req.user.token);
+      console.log('User:', req.user.name);
+      res.json({ user, token });
+      console.log('Successfully signed in') 
+      res.json(token);
+      });
 UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 

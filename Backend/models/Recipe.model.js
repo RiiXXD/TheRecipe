@@ -5,7 +5,7 @@ const RecipeSchema=mongoose.Schema(
     title: String,
     authorId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel",
+        ref: "userbooks",
     },
     ingredients: [String],
     url:{type:String,},
@@ -16,7 +16,7 @@ const RecipeSchema=mongoose.Schema(
     servings: String,
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "CommentModel"
+        ref: "comments"
     }],
     createdAt: {
         type: Date,

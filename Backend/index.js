@@ -46,19 +46,33 @@ app.get("/", async (req,res)=>{
   res.status(200).json({posts});
  
 })
+// app.get('/auth/google/callback', 
+//   passport.authenticate('google', {   successRedirect:"http://localhost:3000/",failureRedirect: '/login'},
+  
+//   function(req, res) {
+//     // This code will only execute if authentication succeeds
+//     console.log('Successful authentication', req.user);
+//     res.json(req.user);
+//   }
+//   )
+//   );
 app.get('/auth/google/callback', 
-  passport.authenticate('google', {   successRedirect:"http://localhost:3000/",failureRedirect: '/login'}),
-  // function(req, res) {
-  //   // Successful authentication, redirect home.
-  //   res.send(req.user);
-  // }
-  );
+passport.authenticate('google', {
+  successRedirect:"/login/sucess",
+  failureRedirect: '/failed',
+}),
+function (req, res) {
+  console.log(req);
+  res.json(req.user);
+
+}
+);
   app.get("/login/sucess",async(req,res)=>{
 
     if(req.user){
-        res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg }})
+        res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg,token}})
     }else{
-        res.status(400).json({message:"Not Authorized"})
+        res.status(400).json({message:"Not Authenticated!"})
     }
 })
 

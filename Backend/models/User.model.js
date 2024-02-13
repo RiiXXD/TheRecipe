@@ -5,6 +5,6 @@ const UserSchema=mongoose.Schema({
     password:{type:String, required:true,},
     profileImg:{type:String,},
 },{timeStamps:true});
-const UserModel=mongoose.model("userBook",UserSchema);
+const UserModel=mongoose.model("userbooks",UserSchema);
 
 module.exports=UserModel;
