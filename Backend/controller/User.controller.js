@@ -5,6 +5,7 @@ const UserModel=require("../models/User.model");
 const authorization=require("../middlewares/auth.middleware");
 const {passport} = require('../utils/google.auth');
 const { redirect } = require("react-router-dom");
+const { authenticate } = require("passport");
 
 require('dotenv').config()
 const UserController=Router();
@@ -95,5 +96,19 @@ UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 
 })
+app.get("/getUserDetails",async(req,res)=>{
+  jwt.verify(token,process.env.EncryptionKey,function(err,decoded){
+  if(decoded){
+    userId=decoded.req.userId;
+    const existingUser= UserModel.findOne({userId});
+    if(existingUser){
+    res.json({message:"authenticated!",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
+    }
+    }
+  else{
+     
+      console.log("error occured while login",err)
+  }})}
+)
 
 module.exports=UserController;

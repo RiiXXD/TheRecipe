@@ -1,6 +1,7 @@
 const cors=require('cors');
 const express=require('express');
 const multer = require('multer');
+const { redirect } = require("react-router-dom");
 
 const UserController=require('./controller/User.controller')
 const RecipeController=require('./controller/Recipe.controller')
@@ -70,11 +71,14 @@ function (req, res) {
   app.get("/login/sucess",async(req,res)=>{
 
     if(req.user){
-        res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg,token}})
+        // res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg,token:req.user.token}})
+        res.redirect(`http://localhost:3000/?id=<${req.user._id}>&name=${req.user.name}&email=${req.user.email}&profileImg=${req.user.profileImg}&token=${req.user.token}`)
     }else{
         res.status(400).json({message:"Not Authenticated!"})
     }
 })
+
+
 
 // app.get("/logout",(req,res,next)=>{
 //     req.logout(function(err){

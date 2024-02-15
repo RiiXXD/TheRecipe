@@ -11,6 +11,7 @@ export default function Home(){
       console.log(response);
       setRecipes(response.recipe);
       }
+      
       useEffect(()=>{
         getRecipe();
         

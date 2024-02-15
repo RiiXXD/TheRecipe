@@ -25,7 +25,8 @@ export default function Navbar(){
   const[name,setName]=useState();
   const[email,setEmail]=useState();
   const[password,setPassword]=useState();
-  const[checkAuth,setCheckAuth]=useState();
+  const[checkAuth,setCheckAuth]=useState(false);
+  
   const handleNameChange = (e) => setName(e.target.value)
   const handleEmailChange = (e) => setEmail(e.target.value)
   const handlePasswordChange = (e) => setPassword(e.target.value)
@@ -46,17 +47,21 @@ export default function Navbar(){
 
   const GoogleAuth= async ()=>{
      Google();
+     setCheckAuth(true);
   }
   const Google= ()=>{
     window.open(`${baseUrl}user/auth/google`,"_self");
-    
+   console.log(checkAuth)
   }
-//  const handleAuth=async()=>{
-//    const data=await fetch(`${baseUrl}user/auth/google/callback`)
-//    const res=await data.json();
-//    console.log(res);
-//  }
-
+ const handleAuth=async()=>{
+   const data=await fetch(`${baseUrl}user/auth/getUserDetails`)
+   const res=await data.json();
+   console.log(res);
+ }
+useEffect(()=>{
+  handleAuth();
+},[])
+handleAuth();
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
