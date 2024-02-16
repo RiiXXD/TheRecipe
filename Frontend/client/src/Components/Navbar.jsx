@@ -23,10 +23,11 @@ export default function Navbar(){
   const finalRef = React.useRef(null)
   const [isWaiting,setisWaiting]=useState("");
   const[name,setName]=useState();
+  const[userId,setUserId]=useState();
   const[email,setEmail]=useState();
   const[password,setPassword]=useState();
   const[checkAuth,setCheckAuth]=useState(false);
-  
+  const[token,setToken]=useState("");
   const handleNameChange = (e) => setName(e.target.value)
   const handleEmailChange = (e) => setEmail(e.target.value)
   const handlePasswordChange = (e) => setPassword(e.target.value)
@@ -44,7 +45,9 @@ export default function Navbar(){
   const data = await res.json();
    setName(data.user.name);
    setEmail(data.user.name);
-  //  setPassword()
+   setToken(data.user.token);
+   setUserId(data.user.id);
+
    setCheckAuth(data.user?true:false);
   console.log(data);}
 catch(err){
@@ -54,13 +57,9 @@ catch(err){
   }
 const logOut=async()=>{
   console.log("clicked");
-  try {const res= await fetch(`${baseUrl}logout`);
-  // const data=await res.json();
-  setCheckAuth(false);
-}
-catch(err){
-  console.log(err);
-}
+
+
+setCheckAuth(false);
 }
   const GoogleAuth= async ()=>{
      Google();
@@ -142,6 +141,7 @@ catch(err){
 
 {checkAuth &&  <>
   <Button onClick={logOut}>Log Out</Button>
+  <Text>{name}</Text>
 </> }
     </ButtonGroup>
   </Flex>

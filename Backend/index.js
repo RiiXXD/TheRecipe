@@ -83,15 +83,15 @@ function (req, res) {
 
 
 
-app.get("/logout",(req,res,next)=>{
-    req.logout(function(err){
-        if(err){
-          return next(err)
-          
-        }
-        res.redirect("http://localhost:3000");
-    })
-})
+// app.get("/logout",(req,res,next)=>{
+//     req.logout(function(err){
+//         if(err){
+//           return next(err)
+
+//         }
+//         res.redirect("http://localhost:3000");
+//     })
+// })
 
 
 app.listen(process.env.Port,async()=>{
