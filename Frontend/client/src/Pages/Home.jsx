@@ -9,12 +9,17 @@ export default function Home(){
       const data=await fetch("http://localhost:8080/recipe/getRecipe");
       const response=await data.json();
       console.log(response);
+      
       setRecipes(response.recipe);
       }
-      
+      // const handleAuth=async()=>{
+      //   const data=await fetch(`http://localhost:8080/user/getUserDetails`)
+      //   const res=await data.json();
+      //   console.log(res);
+      // }
       useEffect(()=>{
         getRecipe();
-        
+        // handleAuth();
       },[])
     return <Box bg="#F3E99F">
     <Navbar/>

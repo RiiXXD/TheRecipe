@@ -96,19 +96,26 @@ UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 
 })
-app.get("/getUserDetails",async(req,res)=>{
-  jwt.verify(token,process.env.EncryptionKey,function(err,decoded){
-  if(decoded){
-    userId=decoded.req.userId;
-    const existingUser= UserModel.findOne({userId});
-    if(existingUser){
-    res.json({message:"authenticated!",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
-    }
-    }
-  else{
-     
-      console.log("error occured while login",err)
-  }})}
-)
+// UserController.get("/getUserDetails",async(req,res)=>{
+//   jwt.verify(req.token,process.env.EncryptionKey,function(err,decoded){
+//   if(decoded){
+//     userId=decoded.req.userId;
+//     const existingUser= UserModel.findOne({userId});
+//     if(existingUser){
+//     res.json({message:"authenticated!",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
+//     }
+//     }
+//   else{
+//     res.json({err})
+//       console.log("error occured while login",err)
+//   }
+//   // if (req.session.user) {
+//   //   // Access user details from the session
+//   //   const user = req.session.user;
+//   //   res.json( { user });
+//   // } 
+// }
+// )})
+
 
 module.exports=UserController;

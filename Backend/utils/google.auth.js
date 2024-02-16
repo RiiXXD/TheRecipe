@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy({
       const token=jwt.sign({userId:existingUser._id},process.env.EncryptionKey);
       // res.json({msg:"Succesfully login ",token})
       console.log("token",token);
-      return cb(null,  { id: existingUser.id, name: existingUser.name, email: existingUser.email, profileImg: existingUser.profileImg ,token});
+      return cb(null,  { id: existingUser.id, name: existingUser.name, email: existingUser.email, profileImg: existingUser.profileImg ,token:token});
 
     } 
     else{

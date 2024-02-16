@@ -33,7 +33,7 @@ export default function Navbar(){
 
   const isError=(email==="")
   const createUser=async()=>{
-    setisWaiting(true);
+    try{setisWaiting(true);
    const res= await fetch(`${baseUrl}user/sign`,{
       method: "POST",
       headers:{
@@ -42,9 +42,26 @@ export default function Navbar(){
     body: JSON.stringify({name,email,password})})
     setisWaiting(false); 
   const data = await res.json();
-  console.log(data);
+   setName(data.user.name);
+   setEmail(data.user.name);
+  //  setPassword()
+   setCheckAuth(data.user?true:false);
+  console.log(data);}
+catch(err){
+  console.log(err);
+  
+}
   }
-
+const logOut=async()=>{
+  console.log("clicked");
+  try {const res= await fetch(`${baseUrl}logout`);
+  // const data=await res.json();
+  setCheckAuth(false);
+}
+catch(err){
+  console.log(err);
+}
+}
   const GoogleAuth= async ()=>{
      Google();
      setCheckAuth(true);
@@ -53,15 +70,15 @@ export default function Navbar(){
     window.open(`${baseUrl}user/auth/google`,"_self");
    console.log(checkAuth)
   }
- const handleAuth=async()=>{
-   const data=await fetch(`${baseUrl}user/auth/getUserDetails`)
-   const res=await data.json();
-   console.log(res);
- }
-useEffect(()=>{
-  handleAuth();
-},[])
-handleAuth();
+//  const handleAuth=async()=>{
+//    const data=await fetch(`${baseUrl}user/auth/getUserDetails`)
+//    const res=await data.json();
+//    console.log(res);
+//  }
+// useEffect(()=>{
+//   handleAuth();
+// },[])
+// handleAuth();
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
@@ -69,59 +86,63 @@ handleAuth();
     <Spacer />
     <ButtonGroup gap='2'>
       {/* <Button onclick={openForm} colorScheme='teal'>Sign Up</Button> */}
-      <Button onClick={onOpen}>Sign Up</Button>
+      {!checkAuth &&<><Button onClick={onOpen}>Sign Up</Button>
+     
       <Login/>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl isRequired>
-              <FormLabel>Name</FormLabel>
-              <Input ref={initialRef} placeholder='First name' type="name" value={name} onChange={handleNameChange}/>
-            </FormControl>
+<Modal
+  initialFocusRef={initialRef}
+  finalFocusRef={finalRef}
+  isOpen={isOpen}
+  onClose={onClose}
+  isCentered
+>
+  <ModalOverlay />
+  <ModalContent>
+    <ModalHeader>Create your account</ModalHeader>
+    <ModalCloseButton />
+    <ModalBody pb={6}>
+      <FormControl isRequired>
+        <FormLabel>Name</FormLabel>
+        <Input ref={initialRef} placeholder='First name' type="name" value={name} onChange={handleNameChange}/>
+      </FormControl>
 
-            <FormControl mt={4} isRequired isInvalid={isError}>
-              <FormLabel>Email</FormLabel>
-              <Input placeholder='Email' value={email} onChange={handleEmailChange}/>
-              {isError ? 
-      (
-        <FormErrorMessage>Email is required.</FormErrorMessage>
-      ) :(
-        <FormHelperText>
-         Enter your email address
-        </FormHelperText>
-      )}
-            </FormControl>
-            <FormControl mt={4} isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input placeholder='Password' type='password' value={password} onChange={handlePasswordChange} />
-             
-            </FormControl>
-          </ModalBody>
+      <FormControl mt={4} isRequired isInvalid={isError}>
+        <FormLabel>Email</FormLabel>
+        <Input placeholder='Email' value={email} onChange={handleEmailChange}/>
+        {isError ? 
+(
+  <FormErrorMessage>Email is required.</FormErrorMessage>
+) :(
+  <FormHelperText>
+   Enter your email address
+  </FormHelperText>
+)}
+      </FormControl>
+      <FormControl mt={4} isRequired>
+        <FormLabel>Password</FormLabel>
+        <Input placeholder='Password' type='password' value={password} onChange={handlePasswordChange} />
+       
+      </FormControl>
+    </ModalBody>
 
-          <ModalFooter>
-            <Button isLoading={isWaiting} colorScheme='blue' mr={3} onClick={createUser}>
-              Create Account
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-            
-            
-          </ModalFooter>
-          <Text align="center">OR</Text>
-           
-            <Button w="80%" m="1em auto" onClick={GoogleAuth} ><FcGoogle/> Sign Up with Google</Button>
-        </ModalContent>
-      </Modal>
+    <ModalFooter>
+      <Button isLoading={isWaiting} colorScheme='blue' mr={3} onClick={createUser}>
+        Create Account
+      </Button>
+      <Button onClick={onClose}>Cancel</Button>
       
+      
+    </ModalFooter>
+    <Text align="center">OR</Text>
+     
+      <Button w="80%" m="1em auto" onClick={GoogleAuth} ><FcGoogle/> Sign Up with Google</Button>
+  </ModalContent>
+</Modal></> }
+
+{checkAuth &&  <>
+  <Button onClick={logOut}>Log Out</Button>
+</> }
     </ButtonGroup>
   </Flex>
 
