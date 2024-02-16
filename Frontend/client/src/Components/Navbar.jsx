@@ -14,6 +14,9 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import  Login from "./Login"
+import {useDispatch,useSelector} from "react-redux";
+import { sign } from "../Redux/Authentication/action";
+import {store} from "../Redux/store"
 export default function Navbar(){
   const baseUrl="http://localhost:8080/";
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -26,44 +29,63 @@ export default function Navbar(){
   const[userId,setUserId]=useState();
   const[email,setEmail]=useState();
   const[password,setPassword]=useState();
-  const[checkAuth,setCheckAuth]=useState(false);
+  // const[checkAuth,setCheckAuth]=useState(false);
   const[token,setToken]=useState("");
-  const handleNameChange = (e) => setName(e.target.value)
-  const handleEmailChange = (e) => setEmail(e.target.value)
-  const handlePasswordChange = (e) => setPassword(e.target.value)
+  const user = useSelector((store)=> store.authReducer.user)
+  const checkAuth = useSelector((store)=> store.authReducer.checkAuth)
+
+  const dispatch=useDispatch();
+  const [formData,setFormData]=useState({
+    name:"",
+    email:"",
+    password:"",
+  })
+  const handleNameChange = (e) => setFormData((prev)=>({
+    ...prev,
+    name:e.target.value,
+  }))
+  const handleEmailChange = (e) =>  setFormData((prev)=>({
+    ...prev,
+    email:e.target.value,
+  }))
+  const handlePasswordChange = (e) => setFormData((prev)=>({
+    ...prev,
+    password:e.target.value,
+  }))
+   const createUser=async()=>{
+    await dispatch(sign(formData));
+   }   
 
   const isError=(email==="")
-  const createUser=async()=>{
-    try{setisWaiting(true);
-   const res= await fetch(`${baseUrl}user/sign`,{
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json"
-      },
-    body: JSON.stringify({name,email,password})})
-    setisWaiting(false); 
-  const data = await res.json();
-   setName(data.user.name);
-   setEmail(data.user.name);
-   setToken(data.user.token);
-   setUserId(data.user.id);
+//   const createUser=async()=>{
+//     try{setisWaiting(true);
+//    const res= await fetch(`${baseUrl}user/sign`,{
+//       method: "POST",
+//       headers:{
+//         "Content-Type": "application/json"
+//       },
+//     body: JSON.stringify({name,email,password})})
+//     setisWaiting(false); 
+//   const data = await res.json();
+//    setName(data.user.name);
+//    setEmail(data.user.name);
+//    setToken(data.user.token);
+//    setUserId(data.user.id);
 
-   setCheckAuth(data.user?true:false);
-  console.log(data);}
-catch(err){
-  console.log(err);
+//    setCheckAuth(data.user?true:false);
+//   console.log(data);}
+// catch(err){
+//   console.log(err);
   
-}
-  }
+// }
+//   }
 const logOut=async()=>{
   console.log("clicked");
 
 
-setCheckAuth(false);
 }
   const GoogleAuth= async ()=>{
      Google();
-     setCheckAuth(true);
   }
   const Google= ()=>{
     window.open(`${baseUrl}user/auth/google`,"_self");
@@ -141,7 +163,7 @@ setCheckAuth(false);
 
 {checkAuth &&  <>
   <Button onClick={logOut}>Log Out</Button>
-  <Text>{name}</Text>
+  <Text>{user.name}</Text>
 </> }
     </ButtonGroup>
   </Flex>

@@ -1,21 +1,47 @@
 
-import { SIGN_SUCCESS,SIGN_REQUEST,AUTH_ERROR, AUTH_REQUEST, AUTH_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST } from "./actionTypes"
+import { SIGN_SUCCESS,SIGN_REQUEST,SIGN_ERROR,LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST } from "./action-type"
 
 const intitState={
     isLoading : false,
-    isAuth:false,
-    user : [],
+    checkAuth:false,
+    user : {},
     loggedInUsers:[],
     isError : false,
-    regMsg : '',
-    errMsg:"",
+    msg : '',
+   
     loginMsg:"",
     isRegistered:false,
     token:"",
     isLogout:false
 }
-const reducer =(state=intitState,{type,payload})=>{
+export const reducer =(state=intitState,{type,payload})=>{
     switch(type){
+        case SIGN_REQUEST : {
+            return {
+              ...state,
+              isLoading :true,
+              isError:false,
+              checkAuth : false,
+            }}
+            case SIGN_SUCCESS : {
+                console.log(payload);
+
+                return {
+                  ...state,
+                  user:payload,
+                  isLoading :false,
+                  isError:false,
+                  checkAuth : true,
+                  msg:payload.msg,
+                }}
+                case SIGN_ERROR:{
+                    console.log(payload);
+                   return { ...state,
+                    msg:payload,
+                    isLoading :false,
+                    isError:true,
+                    checkAuth : false,}
+                }
         default:
             {
                 return state

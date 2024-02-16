@@ -3,8 +3,10 @@ import Navbar from '../Components/Navbar';
 import RecipeForm from '../Pages/Form';
 import Recard from '../Components/Card';
 import { Grid ,Box} from '@chakra-ui/react'
+import { useSelector } from 'react-redux';
 export default function Home(){
     const [recipes,setRecipes]=useState([]);
+  
     const getRecipe=async()=>{
       const data=await fetch("http://localhost:8080/recipe/getRecipe");
       const response=await data.json();
