@@ -28,7 +28,7 @@ export const reducer =(state=intitState,{type,payload})=>{
 
                 return {
                   ...state,
-                  user:payload,
+                  user:{...payload},
                   isLoading :false,
                   isError:false,
                   checkAuth : true,
@@ -42,6 +42,18 @@ export const reducer =(state=intitState,{type,payload})=>{
                     isError:true,
                     checkAuth : false,}
                 }
+                case LOGOUT_REQUEST:{
+                    
+                   return { 
+                    ...state,
+                    user:"",
+                    msg:"",
+                    isLoading :false,
+                    isError:false,
+                    checkAuth : false,
+                }
+                }
+                
         default:
             {
                 return state

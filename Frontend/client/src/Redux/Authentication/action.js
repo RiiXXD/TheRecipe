@@ -21,6 +21,10 @@ export const sign=(formData)=>async (dispatch) =>{
 
         
     }
+   
 }
 
-    
+export const logOut=()=>(dispatch)=>{
+  dispatch({type:LOGOUT_REQUEST})
+
+}

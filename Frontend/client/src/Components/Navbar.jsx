@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import  Login from "./Login"
 import {useDispatch,useSelector} from "react-redux";
-import { sign } from "../Redux/Authentication/action";
+import { sign,logOut } from "../Redux/Authentication/action";
 import {store} from "../Redux/store"
 export default function Navbar(){
   const baseUrl="http://localhost:8080/";
@@ -52,8 +52,8 @@ export default function Navbar(){
     ...prev,
     password:e.target.value,
   }))
-   const createUser=async()=>{
-    await dispatch(sign(formData));
+   const createUser=()=>{
+     dispatch(sign(formData));
    }   
 
   const isError=(email==="")
@@ -79,11 +79,6 @@ export default function Navbar(){
   
 // }
 //   }
-const logOut=async()=>{
-  console.log("clicked");
-
-
-}
   const GoogleAuth= async ()=>{
      Google();
   }
@@ -162,7 +157,7 @@ const logOut=async()=>{
 </Modal></> }
 
 {checkAuth &&  <>
-  <Button onClick={logOut}>Log Out</Button>
+  <Button onClick={()=>{dispatch(logOut())}}>Log Out</Button>
   <Text>{user.name}</Text>
 </> }
     </ButtonGroup>

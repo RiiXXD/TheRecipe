@@ -32,13 +32,13 @@ UserController.post("/sign",async(req,res)=>{
             await user.save();
             const token=jwt.sign({userId:user._id},process.env.EncryptionKey);
          
-            res.json({message:"user SignedUp",user:{ id:user._id,name, email, profileImg,token}})}
+            res.json({msg:"Account Created!",user:{ id:user._id,name, email, profileImg,token}})}
             else if(err){
-                res.json("Something went wrong try again")
+                res.json("Something went wrong try again!")
                 console.log(err);
             }
             else{
-                res.json("Invalid Credentials");
+                res.json("Invalid Credentials!");
                
             }
             
