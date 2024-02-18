@@ -4,6 +4,9 @@ import RecipeForm from '../Pages/Form';
 import Recard from '../Components/Card';
 import { Grid ,Box} from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
+import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
+
 export default function Home(){
     const [recipes,setRecipes]=useState([]);
   
@@ -27,7 +30,8 @@ export default function Home(){
     <Navbar/>
     {/* <RecipeForm/> */}
     <Grid templateColumns='repeat(4, 1fr)' gap={7} p="2em">   { recipes && recipes.map((rec,index)=>{
-    return <Recard  rec={rec} />
+    return  <Recard  rec={rec} />
+
   })}
 
 </Grid>  
