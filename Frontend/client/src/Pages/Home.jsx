@@ -26,7 +26,7 @@ export default function Home(){
         getRecipe();
         // handleAuth();
       },[])
-    return <Box bg="#F3E99F">
+    return <Box bg="#F9997F">
     <Navbar/>
     {/* <RecipeForm/> */}
     <Grid templateColumns='repeat(4, 1fr)' gap={7} p="2em">   { recipes && recipes.map((rec,index)=>{

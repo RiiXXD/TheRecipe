@@ -3,10 +3,11 @@ import { Card,ButtonGroup,Box, Button,Divider,Image,CardBody, CardFooter,Heading
 import { IoStar,IoStarHalf } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 export default function Recard( {rec}){
-  const navigate=useNavigate
+  const navigate=useNavigate();
 const viewRecipe=()=>{
-  navigate("/RecipePage")
+  navigate("/viewRecipe")
 }
+
 return (
  
  <Card onClick={viewRecipe} maxW='sm' bg="#FF6D60" >
