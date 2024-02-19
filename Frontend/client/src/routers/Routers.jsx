@@ -7,6 +7,6 @@ export default function AllRoutes(){
     return <>
     <Routes>
     <Route path="/" element={<Home/>}></Route>
-    <Route path="/viewRecipe" element={<RecipePage/>}></Route>
+    <Route path="/viewRecipe/:id" element={<RecipePage/>}></Route>
     </Routes></>
 }
