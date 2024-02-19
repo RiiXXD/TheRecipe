@@ -16,7 +16,7 @@ const RecipeSchema=mongoose.Schema(
     servings: String,
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "comments"
+        ref: "Comments"
     }],
     createdAt: {
         type: Date,

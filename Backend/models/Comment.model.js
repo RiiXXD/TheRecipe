@@ -5,13 +5,13 @@ const CommentSchema=mongoose.Schema({
     text: String,
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel" // If you have a User model
+        ref: "userbooks" // If you have a User model
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
-const CommentModel=mongoose.model("comments",CommentSchema);
+const CommentModel=mongoose.model("Comments",CommentSchema);
 
 module.exports=CommentModel;
