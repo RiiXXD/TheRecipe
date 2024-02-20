@@ -10,7 +10,7 @@ export const sign=(formData)=>async (dispatch) =>{
           headers:{
             "Content-Type": "application/json"
           },
-        body: JSON.stringify({...formData})
+          body: JSON.stringify({...formData})
     })
     const data = await res.json();
       console.log(data.user);
@@ -27,4 +27,25 @@ export const sign=(formData)=>async (dispatch) =>{
 export const logOut=()=>(dispatch)=>{
   dispatch({type:LOGOUT_REQUEST})
 
+}
+
+export const loginUser=({email,password})=>async(dispatch)=>{
+ try{ dispatch({type:LOGIN_REQUEST})
+  const res= await fetch(`${baseUrl}user/login`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+  body: JSON.stringify({email,password})
+})
+
+const data = await res.json();
+dispatch({type:LOGIN_SUCCESS,payload:data})
+
+console.log(data);
+}
+catch(e){
+  dispatch({type:LOGIN_FAILURE,payload:e})
+
+}
 }

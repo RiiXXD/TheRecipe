@@ -17,7 +17,9 @@ import  Login from "./Login"
 import {useDispatch,useSelector} from "react-redux";
 import { sign,logOut } from "../Redux/Authentication/action";
 import {store} from "../Redux/store"
+import { useNavigate } from 'react-router-dom';
 export default function Navbar(){
+  const navigate=useNavigate();
   const baseUrl="http://localhost:8080/";
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isLogOpen} = useDisclosure()
@@ -86,11 +88,9 @@ export default function Navbar(){
     window.open(`${baseUrl}user/auth/google`,"_self");
    console.log(checkAuth)
   }
-//  const handleAuth=async()=>{
-//    const data=await fetch(`${baseUrl}user/auth/getUserDetails`)
-//    const res=await data.json();
-//    console.log(res);
-//  }
+ const postRecipe=async()=>{
+  navigate('/postRecipe');
+ }
 // useEffect(()=>{
 //   handleAuth();
 // },[])
@@ -157,8 +157,10 @@ export default function Navbar(){
 </Modal></> }
 
 {checkAuth &&  <>
+  <Button onClick={postRecipe}>Post</Button>
   <Button onClick={()=>{dispatch(logOut())}}>Log Out</Button>
   <Text>{user.name}</Text>
+
 </> }
     </ButtonGroup>
   </Flex>

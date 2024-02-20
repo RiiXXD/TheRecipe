@@ -15,7 +15,7 @@ export default function Home(){
       const response=await data.json();
       console.log(response);
       setRecipes(response.recipe);
-      }
+    }
       
       useEffect(()=>{
         getRecipe();

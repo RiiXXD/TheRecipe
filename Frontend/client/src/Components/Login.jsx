@@ -12,9 +12,11 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
+import {useDispatch} from "react-redux"
+import {loginUser} from "../Redux/Authentication/action"
 export default function Login(){
     const baseUrl="http://localhost:8080/";
-
+    const dispatch=useDispatch();
     const[email,setEmail]=useState();
     const[password,setPassword]=useState();
     
@@ -31,18 +33,8 @@ export default function Login(){
     const handlePasswordChange = (e) => setPassword(e.target.value)
 
 
-   const login=async ()=>{ const res= await fetch(`${baseUrl}user/login`,{
-        method: "POST",
-        headers:{
-          "Content-Type": "application/json"
-        },
-      body: JSON.stringify({email,password})})
-      setisWaiting(false); 
-      
-    const data = await res.json();
-    setEmail("");
-      setPassword("");
-    console.log(data);
+   const login= ()=>{ 
+    dispatch(loginUser({email,password}));
     }
     const googleLogin=()=>{
         

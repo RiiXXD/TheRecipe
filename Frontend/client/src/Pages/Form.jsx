@@ -3,7 +3,10 @@ import {
     Text,Textarea,Button,Box,Flex
     ,FormControl,Input,FormLabel,useToast
   } from '@chakra-ui/react'
-function RecipeForm() {
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from "react-icons/fa";
+export default function RecipeForm() {
+  const navigate=useNavigate();
   const toast = useToast()
     const [title, setTitle] = useState(''); // Initial state with one empty ingredient field
     // const [authorId,setAuthorId] = useState('');
@@ -69,11 +72,10 @@ const handleSubmit = async(event) => {
   setServings("");
 }
 
-// const postRecipe=()=>{
 
-// }
   return(
-    <Box  bg="" w="100%" h="100vh" p="2.5em 0">
+    <Box  bg="" w="100%" h="100vh" p="2.5em" mX="2em">
+      <Button onClick={()=>{navigate(-1)}}><FaArrowLeft /></Button>
     <FormControl margin={"0 auto"} w="50%">
     <FormLabel my={"1em"}>Title</FormLabel>
     <Input placeholder='Your Recipe Title ' type='text' value={title} onChange={(e)=>{setTitle(e.target.value)}} />
@@ -133,4 +135,3 @@ const handleSubmit = async(event) => {
   
 }
 
-export default RecipeForm;
