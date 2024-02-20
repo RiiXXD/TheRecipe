@@ -42,6 +42,35 @@ export const reducer =(state=intitState,{type,payload})=>{
                     isError:true,
                     checkAuth : false,}
                 }
+                case LOGIN_REQUEST : {
+                    console.log(payload);
+    
+                    return {
+                      ...state,
+                      isLoading :true,
+                      isError:false,
+                     
+                    }}
+                    case LOGIN_SUCCESS:{
+                        console.log(payload);
+                       return { 
+                        ...state,
+                        user:{...payload},
+                        isLoading :false,
+                        isError:false,
+                        checkAuth : true,
+                    }
+                    }
+                    case LOGIN_FAILURE:{
+                        
+                       return { 
+                        ...state,
+                        user:"",
+                        isLoading :false,
+                        isError:true,
+                        checkAuth : false,
+                    }
+                    }
                 case LOGOUT_REQUEST:{
                     
                    return { 
