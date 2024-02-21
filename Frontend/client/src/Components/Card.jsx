@@ -15,13 +15,13 @@ const viewRecipe=()=>{
 
   navigate(`/viewRecipe/${rec._id}`)
 }
-const roundedRating = Math.round(rec.ratings);
-for(let i=0;i<rec.roundedRating;i++){
-  stars.push(<IoStar/>);
+const roundedRating = Math.round(rec.rating);
+for(let i=0;i<roundedRating;i++){
+  stars.push(<IoStar color="#FFB000"/>);
 }
 return (
  
- <Card onClick={viewRecipe} maxW='sm' bg="#FF6D60" >
+ <Card onClick={viewRecipe} maxW='sm' bg="white.600" >
 
     <CardBody>
      <Image
@@ -38,7 +38,12 @@ return (
 
       </Flex>
       <Text>Ingredients Count -{rec.ingredients.length}</Text>
-      {/* {for()} */}
+      <Flex>
+      {stars.map((star)=>{
+        return <Text>{star}</Text>
+      })}
+      </Flex>
+    
     </CardBody>
     <Divider />
     <CardFooter>
