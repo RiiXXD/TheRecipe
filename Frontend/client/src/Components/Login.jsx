@@ -17,8 +17,8 @@ import {loginUser} from "../Redux/Authentication/action"
 export default function Login(){
     const baseUrl="http://localhost:8080/";
     const dispatch=useDispatch();
-    const[email,setEmail]=useState();
-    const[password,setPassword]=useState();
+    const[email,setEmail]=useState("");
+    const[password,setPassword]=useState("");
     
     const initialLogRef = React.useRef(null)
     const finalLogRef = React.useRef(null)
@@ -26,7 +26,7 @@ export default function Login(){
     const [isWaiting,setisWaiting]=useState("");
 
     const isError=(email==="")
-
+    const isErrorpass=(password==="")
 
    
     const handleEmailChange = (e) => setEmail(e.target.value)
@@ -34,6 +34,7 @@ export default function Login(){
 
 
    const login= ()=>{ 
+    if(email!==""&&password!=="")
     dispatch(loginUser({email,password}));
     }
     const googleLogin=()=>{
@@ -68,7 +69,7 @@ export default function Login(){
         </FormHelperText>
       )}
             </FormControl>
-            <FormControl mt={4} isRequired>
+            <FormControl mt={4} isRequired isInvalid={isErrorpass}>
               <FormLabel>Password</FormLabel>
               <Input placeholder='Password' type='password' value={password} onChange={handlePasswordChange} />
              

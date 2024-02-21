@@ -8,12 +8,17 @@ import { useNavigate } from 'react-router-dom';
 export default function Recard( {rec}){
   const navigate=useNavigate();
   const dispatch=useDispatch();
+  const stars = [];
 
 const viewRecipe=()=>{
-  navigate(`/viewRecipe/${rec._id}`)
   dispatch(singleton(rec._id))
-}
 
+  navigate(`/viewRecipe/${rec._id}`)
+}
+const roundedRating = Math.round(rec.ratings);
+for(let i=0;i<rec.roundedRating;i++){
+  stars.push(<IoStar/>);
+}
 return (
  
  <Card onClick={viewRecipe} maxW='sm' bg="#FF6D60" >
@@ -33,6 +38,7 @@ return (
 
       </Flex>
       <Text>Ingredients Count -{rec.ingredients.length}</Text>
+      {/* {for()} */}
     </CardBody>
     <Divider />
     <CardFooter>

@@ -49,16 +49,17 @@ export const reducer =(state=intitState,{type,payload})=>{
                       ...state,
                       isLoading :true,
                       isError:false,
-                     
+                     checkAuth:false,
                     }}
                     case LOGIN_SUCCESS:{
                         console.log(payload);
                        return { 
                         ...state,
-                        user:{...payload},
+                        user:{...payload.user,token:payload.token},
                         isLoading :false,
                         isError:false,
-                        checkAuth : true,
+                        checkAuth : payload.user?true:false,
+                        
                     }
                     }
                     case LOGIN_FAILURE:{

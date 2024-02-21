@@ -1,8 +1,8 @@
 const RecipeModel=require("../models/Recipe.model");
 const {Router}=require("express");
-const {CommentModel}=require("../models/Comment.model");
+const CommentModel=require("../models/Comment.model");
 const authorization=require("../middlewares/auth.middleware") 
-// const mongoose=require('mongoose');
+const mongoose=require('mongoose');
 
 const RecipeController=Router();
 
@@ -46,12 +46,16 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
  RecipeController.get("/getRecipe/:id", async (req, res) => {
     try {
       const recipeId = req.params.id;
+     console.log(recipeId);
       const recipe= await RecipeModel.findById(recipeId).populate('authorId');
+      RecipeComments=[...recipe.comments];
       if (!recipe) {
         return res.status(404).json({ message: 'Recipe not found' });
       }
      res.status(200).json(recipe);
-    } catch (error) {
+     console.log(RecipeComments)
+  }
+  catch (error) {
       console.error('Error fetching recipe with comments:', error);
       res.status(500).json({ message: 'Internal server error' });
     }

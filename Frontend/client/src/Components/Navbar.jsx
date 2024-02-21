@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,useDisclosure
-  ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,
+  ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,Avatar
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useEffect } from 'react';
@@ -59,28 +59,7 @@ export default function Navbar(){
    }   
 
   const isError=(email==="")
-//   const createUser=async()=>{
-//     try{setisWaiting(true);
-//    const res= await fetch(`${baseUrl}user/sign`,{
-//       method: "POST",
-//       headers:{
-//         "Content-Type": "application/json"
-//       },
-//     body: JSON.stringify({name,email,password})})
-//     setisWaiting(false); 
-//   const data = await res.json();
-//    setName(data.user.name);
-//    setEmail(data.user.name);
-//    setToken(data.user.token);
-//    setUserId(data.user.id);
 
-//    setCheckAuth(data.user?true:false);
-//   console.log(data);}
-// catch(err){
-//   console.log(err);
-  
-// }
-//   }
   const GoogleAuth= async ()=>{
      Google();
   }
@@ -91,10 +70,7 @@ export default function Navbar(){
  const postRecipe=async()=>{
   navigate('/postRecipe');
  }
-// useEffect(()=>{
-//   handleAuth();
-// },[])
-// handleAuth();
+
     return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
@@ -160,7 +136,7 @@ export default function Navbar(){
   <Button onClick={postRecipe}>Post</Button>
   <Button onClick={()=>{dispatch(logOut())}}>Log Out</Button>
   <Text>{user.name}</Text>
-
+  <Avatar name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
 </> }
     </ButtonGroup>
   </Flex>

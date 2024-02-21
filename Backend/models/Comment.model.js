@@ -1,4 +1,3 @@
-const {UserModel}=require("./User.model")
 
 const mongoose=require('mongoose');
 const CommentSchema=mongoose.Schema({

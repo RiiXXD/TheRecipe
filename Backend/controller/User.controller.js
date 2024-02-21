@@ -63,7 +63,7 @@ UserController.post("/login",async (req,res)=>{
       }
       else if(result){
         const token=jwt.sign({userId:existingUser._id},process.env.EncryptionKey);
-             res.json({msg:"Succesfully login ",token, name:existingUser._doc.name,id:existingUser._doc._id})
+             res.json({msg:"Succesfully login ",token,user:{ email:existingUser._doc.email, name:existingUser._doc.name,id:existingUser._doc._id,profileImg:existingUser._doc.profileImg}})
       }
       else{
         res.json("invalid creds");

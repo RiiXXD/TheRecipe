@@ -9,15 +9,18 @@ const RecipeSchema=mongoose.Schema(
     },
     ingredients: [String],
     url:{type:String,},
-    instructions: String,
-    prep_time: String,
-    cook_time: String,
+    instructions: [String],
+    prep_time: Number,
+    cook_time: Number,
     total_time: String,
     servings: String,
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comments"
-    }],
+    comments: [mongoose.Schema.Types.ObjectId],
+    mealType:[String],
+    rating:Number,
+    difficulty:String,
+    cuisine:String,
+    caloriesPerServing:Number,
+    tags:[String],
     createdAt: {
         type: Date,
         default: Date.now
