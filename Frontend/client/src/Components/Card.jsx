@@ -12,7 +12,6 @@ export default function Recard( {rec}){
 
 const viewRecipe=()=>{
   dispatch(singleton(rec._id))
-
   navigate(`/viewRecipe/${rec._id}`)
 }
 const roundedRating = Math.round(rec.rating);
@@ -21,39 +20,43 @@ for(let i=0;i<roundedRating;i++){
 }
 return (
  
- <Card onClick={viewRecipe} maxW='sm' bg="white.600" >
-
-    <CardBody>
-     <Image
+ <Card onClick={viewRecipe} maxW='sm' bg="4A4A4A" >
+ {/* <Box> */}
+ <Image
         src={rec.url}
         alt='recpie representation'
         borderRadius='lg'
         w="100%"
-        h="50%"
+        h="70%"
       />
-      <Flex mt='6' justify={"space-between"} align="center">
+ {/* </Box> */}
+    <CardBody>
+    
+      <Flex mt='2' justify={"space-between"} align="center">
         <Heading size='md'>{rec.title}</Heading>
-        <Text> {rec.authorId ? rec.authorId.name : 'Unknown'}</Text> 
        
 
       </Flex>
-      <Text>Ingredients Count -{rec.ingredients.length}</Text>
-      <Flex>
+      {/* <Text>Ingredients Count -{rec.ingredients.length}</Text> */}
+      <Flex justify={"space-between"} align="center">
+      <Flex >
       {stars.map((star)=>{
         return <Text>{star}</Text>
       })}
+
       </Flex>
+      <Text fontSize={"0.8em"}> By-{rec.authorId ? rec.authorId.name : 'Unknown'}</Text> 
+
+      </Flex>
+      <Flex justify="space-around">
+      { rec.tags.map((tag)=>{return <Box>
+        <Text>{tag}</Text>
+    </Box>})}
+      </Flex>
+   
     
     </CardBody>
-    <Divider />
-    <CardFooter>
-      <ButtonGroup spacing='2'>
-        <Button variant='solid' colorScheme='blue'>
-          Save 
-        </Button>
-       
-      </ButtonGroup>
-    </CardFooter>
+  
     </Card>
 
 )

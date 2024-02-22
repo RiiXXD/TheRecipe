@@ -43,7 +43,7 @@ export default function Login(){
          
     }
     return(
-       <><Button onClick={onOpen} colorScheme='teal'>Log in</Button>
+       <><Button onClick={onOpen} bg="#353232" color="white">Log in</Button>
 
         <Modal
         initialFocusRef={initialLogRef}

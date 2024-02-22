@@ -59,7 +59,7 @@ export const reducer =(state=intitState,{type,payload})=>{
                         isLoading :false,
                         isError:false,
                         checkAuth : payload.user?true:false,
-                        
+                        msg:payload.msg,
                     }
                     }
                     case LOGIN_FAILURE:{

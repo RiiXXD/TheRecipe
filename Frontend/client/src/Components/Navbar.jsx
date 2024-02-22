@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,useDisclosure
+  ModalCloseButton,useDisclosure,Stack
   ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,Avatar
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
@@ -71,14 +71,14 @@ export default function Navbar(){
   navigate('/postRecipe');
  }
 
-    return <Flex minWidth='max-content' alignItems='center' gap='2' p={["1em","1em","1.5em","1.5em"]}>
+    return <Flex minWidth='max-content' align='center' gap='2' p={["1em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
     </Box>
-    <Spacer />
-    <ButtonGroup gap='2'>
+    <Spacer  />
+    <ButtonGroup gap='2' >
       {/* <Button onclick={openForm} colorScheme='teal'>Sign Up</Button> */}
-      {!checkAuth &&<><Button onClick={onOpen}>Sign Up</Button>
+      {!checkAuth &&<><Button   onClick={onOpen}>Sign Up</Button>
      
       <Login/>
 
@@ -130,15 +130,21 @@ export default function Navbar(){
      
       <Button w="80%" m="1em auto" onClick={GoogleAuth} ><FcGoogle/> Sign Up with Google</Button>
   </ModalContent>
-</Modal></> }
+</Modal></> 
+}
 
-{checkAuth &&  <>
-  <Button onClick={postRecipe}>Post</Button>
-  <Button onClick={()=>{dispatch(logOut())}}>Log Out</Button>
-  <Text>{user.name}</Text>
-  <Avatar name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
-</> }
+{checkAuth &&      <ButtonGroup gap='2' >
+
+  <Button  onClick={postRecipe}>Post</Button>
+  <Button onClick={()=>{dispatch(logOut())}} bg='#403121' color="white" >Log Out</Button>
+ 
+
+</ButtonGroup> }
     </ButtonGroup>
+    {checkAuth && <Stack align={"center"}>
+  <Avatar size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
+  <Text fontSize={"0.6em"}>{user.name}</Text>
+  </Stack>}
   </Flex>
 
 }
