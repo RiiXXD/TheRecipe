@@ -77,7 +77,7 @@ export default function Login(){
           </ModalBody>
 
           <ModalFooter>
-            <Button isLoading={isWaiting} colorScheme='blue' mr={3} onClick={login} >
+            <Button isLoading={isWaiting} bg='#353232' mr={3} onClick={login} >
               Log in
             </Button>
             <Button onClick={onClose}>Cancel</Button>

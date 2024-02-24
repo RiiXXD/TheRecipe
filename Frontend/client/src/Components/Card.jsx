@@ -48,13 +48,21 @@ return (
       <Text fontSize={"0.8em"}> By-{rec.authorId ? rec.authorId.name : 'Unknown'}</Text> 
 
       </Flex>
-      <Flex justify="space-around">
-      { rec.tags.map((tag)=>{return <Box>
-        <Text>{tag}</Text>
-    </Box>})}
-      </Flex>
-   
-    
+      {/* 
+      { rec.tags.map((tag)=>{return
+         })} */}
+      {/*  */}
+      <Flex justify="space-between">
+      <Box p="0.2em 1em" borderRadius={"5px"} bg={rec.difficulty==="Easy"?"green.500":"red.400"}>
+        <Text >{rec.difficulty}</Text>
+    </Box>
+    {rec.mealType.map((meal)=>{
+      return <Box p="0.2em 1em" borderRadius={"20px"} bg="pink.100">
+         <Text>{meal}</Text>
+     </Box>
+     
+        })}
+   </Flex>
     </CardBody>
   
     </Card>

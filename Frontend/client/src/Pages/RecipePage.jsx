@@ -34,7 +34,13 @@ return (
         <Box  w="50%" align="left">
         <Text fontSize={"1.5em"}>Author -{recipe.authorId?.name && recipe.authorId.name.charAt(0).toUpperCase()+ recipe.authorId.name.slice(1).toLowerCase()} </Text>
         <Heading fontSize={"3em"}>{recipe.title}</Heading>
-
+        <Flex justify="space-around" w="50%">
+        {/* { recipe.tags.map((tag)=>{
+            return <Box>
+        <Text>{tag}</Text>
+           </Box>
+        })} */}
+    </Flex>
         </Box>
 
             <Image w="50%"  h="100%" src={recipe.url} ></Image>
@@ -45,13 +51,13 @@ return (
 <Flex  p="1em 2em" align="center" justify="space-between" borderRadius={"1em"}>
 
     <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" >
-        <Text>Prep Time : {(recipe.prep_time/60>=1?`${recipe.prep_time/60}hr`:"")}{recipe.prep_time%60}m</Text>
+        <Text>Prep<Text as="span" fontWeight="bold">{(recipe.prep_time/60>=1?`${recipe.prep_time/60}hr`:"")}{recipe.prep_time%60}m</Text></Text>
     </Box>
     <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
-    <Text>Cook Time : {(recipe.cook_time/60>=1?`${recipe.cook_time/60}hr`:"")}{recipe.cook_time%60}m</Text>
+    <Text>Cook<Text as="span" fontWeight="bold">{(recipe.cook_time/60>=1?`${recipe.cook_time/60}hr`:"")}{recipe.cook_time%60}m</Text></Text>
     </Box >
     <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
-    <Text>Total Time : {(recipe.prep_time+recipe.cook_time)/60>=1?`${Math.floor((recipe.prep_time+recipe.cook_time)/60)}h `:""}{(recipe.cook_time+recipe.prep_time)%60}m</Text>
+    <Text>Total<Text as="span" fontWeight="bold">{(recipe.prep_time+recipe.cook_time)/60>=1?`${Math.floor((recipe.prep_time+recipe.cook_time)/60)}h `:""}{(recipe.cook_time+recipe.prep_time)%60}m</Text></Text>
     </Box>
     <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
     <Text>Serving : {recipe.servings}</Text>

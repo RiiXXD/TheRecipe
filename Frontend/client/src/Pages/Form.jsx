@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Text,Textarea,Button,Box,Flex
-    ,FormControl,Input,FormLabel,useToast
+    ,FormControl,Input,FormLabel,useToast, Checkbox, CheckboxGroup, Stack,FormHelperText, Heading
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
@@ -11,8 +11,12 @@ export default function RecipeForm() {
     const [title, setTitle] = useState(''); // Initial state with one empty ingredient field
     // const [authorId,setAuthorId] = useState('');
     const [ingredients, setIngredients] = useState(['']); // Initial state with one empty ingredient field
-   const [instructions,setInstructions] = useState('');
+   const [instructions,setInstructions] = useState(['']);
+   const [mealType,setMealType] = useState([]);
+   const [cuisine,setCuisine]=useState("");
+   const [tags,setTags] = useState([]);
    const [totalTime,setTotalTime] = useState('');
+console.log(tags)
    const[url,setUrl] = useState("");
    const [prepTime,setPreptime] = useState(0);
    const [cookTime,setCookTime] = useState(0);
@@ -37,6 +41,19 @@ const handleRemoveIngredient = index => {
     setIngredients(newIngredients);
 };
 
+const handleInstructionChange = (index, event) => {
+  const newInstructions = [...instructions];
+  newInstructions[index] = event.target.value;
+  setInstructions(newInstructions);
+};
+const handleAddInstruction = () => {
+  setInstructions([...instructions, '']);
+};
+const handleRemoveInstruction = index => {
+  const newInstructions = [...instructions];
+  newInstructions.splice(index, 1);
+  setInstructions(newInstructions);
+};
 const handleSubmit = async(event) => {
     event.preventDefault();
     // Submit the form data, including the ingredients array
@@ -47,7 +64,7 @@ const handleSubmit = async(event) => {
       headers:{
         "Content-Type": "application/json"
       },
-    body: JSON.stringify({title,url,ingredients,instructions,prepTime,cookTime,servings})})
+    body: JSON.stringify({title,url,ingredients,instructions,prepTime,cookTime,servings,mealType,cuisine})})
     setIsWaiting(false); 
   const data = await res.json();
   if(data)
@@ -66,17 +83,30 @@ const handleSubmit = async(event) => {
   }
   setTitle("");
   setIngredients([""]);
-  setInstructions("");
+  setInstructions([""]);
   setPreptime(0);
   setCookTime(0);
   setServings("");
 }
-
+function searchAndDelete(arr, value) {
+  // Find the index of the element
+  const index = arr.indexOf(value);
+  
+  // If the element is found, remove it
+  if (index !== -1) {
+      arr.splice(index, 1);
+      console.log(`Element ${value} deleted from the array.`);
+  } else {
+      console.log(`Element ${value} not found in the array.`);
+  }
+}
 
   return(
     <Box  bg="" w="100%" h="100vh" p="2.5em" mX="2em">
       <Button onClick={()=>{navigate(-1)}}><FaArrowLeft /></Button>
-    <FormControl margin={"0 auto"} w="50%">
+      <Box>
+        <Heading align="center" fontSize="3em" p="1em 0">Share Your Recipe !</Heading> </Box>
+    <FormControl margin={"0 auto"} w="60%">
     <FormLabel my={"1em"}>Title</FormLabel>
     <Input placeholder='Your Recipe Title ' type='text' value={title} onChange={(e)=>{setTitle(e.target.value)}} />
     <FormLabel my={"1em"}>Recipe Image URL</FormLabel>
@@ -102,7 +132,20 @@ const handleSubmit = async(event) => {
     ))
     }
     <FormLabel my={"1em"}>Instructions</FormLabel>
-    <Textarea placeholder='Share that secret with us!' value={instructions} onChange={(e)=>{setInstructions(e.target.value)}}/>
+    {
+      // console.log(instructions.length());
+    instructions.map((instruction, index) => (
+     <Box key={index}>
+    <Textarea my={"1em"} type="text" placeholder='Share that secret with us!' value={instruction} onChange={e => handleInstructionChange(index, e)}/>
+    {index === instructions.length - 1 && (
+      <Button my={"0.5em"}  onClick={handleAddInstruction}>Add</Button>
+    )}
+    {index !== 0 && (
+    <Button my={"0.5em"} onClick={() => handleRemoveInstruction(index)}>Remove</Button>
+                    )}
+     </Box>
+    ))
+    }
    <Flex justify={"space-between"} > 
        <Box>
     <FormLabel my={"1em"}>Total Time (Minutes)</FormLabel>
@@ -118,15 +161,65 @@ const handleSubmit = async(event) => {
     <Input type='number'  value={servings} onChange={(e)=>{setServings(e.target.value)}}/>
     </Box>
     </Flex>
+    <FormLabel my={"1em"}>Meal Type</FormLabel>
+
+    <CheckboxGroup colorScheme='green'>
+  <Stack spacing={[1, 5]} direction={['column', 'row']} wrap={"wrap"}>
+    <Checkbox value='Dinner' onChange={(e)=>{
+    (e.target.checked?mealType.push('Dinner') :searchAndDelete(mealType,'Dinner'));
+    console.log(mealType);
+    }}>Dinner</Checkbox>
+    <Checkbox value='Snack'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('Snack') :searchAndDelete(mealType,'Snack'));
+      console.log(mealType);
+      }}>Snack</Checkbox>
+    <Checkbox value='Lunch'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('Lunch') :searchAndDelete(mealType,'Lunch'));
+      console.log(mealType);
+      }}>Lunch</Checkbox>
+    <Checkbox value='Appetizer'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('Appetizer') :searchAndDelete(mealType,'Appetizer'));
+      console.log(mealType);
+      }}>Appetizer</Checkbox>
+    <Checkbox value='Dessert'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('Dessert') :searchAndDelete(mealType,'Dessert'));
+      console.log(mealType);
+      }}>Dessert</Checkbox>
+    <Checkbox value='BreakFast'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('BreakFast') :searchAndDelete(mealType,'BreakFast'));
+      console.log(mealType);
+      }}>BreakFast</Checkbox>
+    <Checkbox value='Beverage'
+    onChange={(e)=>{
+      (e.target.checked?mealType.push('Beverage') :searchAndDelete(mealType,'Beverage'));
+      console.log(mealType);
+      }}>Beverage</Checkbox>
+
+    
+  </Stack>
+</CheckboxGroup>
+<FormLabel my={"1em"}>Cuisine</FormLabel>
+    <Input placeholder='Which Cuisine is it? ' type='text' value={cuisine} onChange={(e)=>{setCuisine(e.target.value)}} />
+    <FormLabel my={"1em"}>Tags</FormLabel>
+    <Input placeholder='Top the search by tags!' type='text'  onChange={(e)=>{setTags((e.target.value).split(", "))}} />
+    <FormHelperText>Tags separated by commas only eg- tag1, tag2.</FormHelperText>
     <Button
-            mt={4}
-            colorScheme='teal'
+            my={4}
+            bg='#353232'
+            color="white"
             type='submit'
+          
             isLoading={isWaiting}
             onClick={handleSubmit}
           >
             Share
     </Button>  
+
           </FormControl>
           </Box>
   )

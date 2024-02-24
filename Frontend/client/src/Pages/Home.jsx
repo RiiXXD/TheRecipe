@@ -69,7 +69,7 @@ export default function Home(){
       
       </Flex>
     </Box>
-    <Grid templateColumns='repeat(4, 1fr)' gap={7} p="2em"> 
+    <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p="2em"> 
       { recipes && recipes.map((rec,index)=>{
     return  <Recard  rec={rec} />
 
