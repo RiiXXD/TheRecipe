@@ -1,4 +1,4 @@
-import { Button,ButtonGroup,Heading,Box,Flex, Spacer } from '@chakra-ui/react'
+import { Button,ButtonGroup,Heading,Box,Flex, Spacer, Divider } from '@chakra-ui/react'
 import {
   Text,
   Modal,
@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import  Login from "./Login"
+import  Search  from './Search';
 import {useDispatch,useSelector} from "react-redux";
 import { sign,logOut } from "../Redux/Authentication/action";
 import {store} from "../Redux/store"
@@ -70,12 +71,22 @@ export default function Navbar(){
  const postRecipe=async()=>{
   navigate('/postRecipe');
  }
+ const [isHovered, setIsHovered] = useState(false);
+
+ const handleMouseEnter = () => {
+   setIsHovered(true);
+ };
+
+ const handleMouseLeave = () => {
+   setIsHovered(false);
+ };
 
     return <Flex minWidth='max-content' align='center' gap='2' p={["1em"]}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
     </Box>
     <Spacer  />
+    <Search/>
     <ButtonGroup gap='2' >
       {/* <Button onclick={openForm} colorScheme='teal'>Sign Up</Button> */}
       {!checkAuth &&<><Button   onClick={onOpen}>Sign Up</Button>
@@ -142,9 +153,22 @@ export default function Navbar(){
 </ButtonGroup> }
     </ButtonGroup>
     {checkAuth && <Stack align={"center"}>
-  <Avatar size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
-  <Text fontSize={"0.6em"}>{user.name}</Text>
+  <Avatar onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave} size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
   </Stack>}
+  {isHovered && <HoverME onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave} user={user}/>}
   </Flex>
 
+}
+
+function HoverME(user){
+
+  return(
+<Box position={"absolute"} top="2%" right="0"  > 
+ <Text fontSize={"0.6em"}>{user.name}</Text>
+  <Divider/>
+  <Button>Edit Profile</Button>
+</Box>
+  )
 }

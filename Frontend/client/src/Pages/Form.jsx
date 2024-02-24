@@ -102,11 +102,11 @@ function searchAndDelete(arr, value) {
 }
 
   return(
-    <Box  bg="" w="100%" h="100vh" p="2.5em" mX="2em">
+    <Box  bg="" w="100%"  p={["0.5em","0.5em","2.5em","2.5em","2.5em"]} mX="2em">
       <Button onClick={()=>{navigate(-1)}}><FaArrowLeft /></Button>
       <Box>
-        <Heading align="center" fontSize="3em" p="1em 0">Share Your Recipe !</Heading> </Box>
-    <FormControl margin={"0 auto"} w="60%">
+        <Heading align="center" fontSize="3em" p="1em 0">What's Your Recipe ?!</Heading> </Box>
+    <FormControl margin={"0 auto"} w={["90%","90%","90%","60%","60%"]}>
     <FormLabel my={"1em"}>Title</FormLabel>
     <Input placeholder='Your Recipe Title ' type='text' value={title} onChange={(e)=>{setTitle(e.target.value)}} />
     <FormLabel my={"1em"}>Recipe Image URL</FormLabel>

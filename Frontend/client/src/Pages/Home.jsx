@@ -13,7 +13,7 @@ export default function Home(){
     
   const [ref, inView] = useInView({ once: false });
   const plateVariants = {
-      visible: { opacity: 1, scale: 1,translateX:"5%", transition: { duration: 1 } },
+      visible: { opacity: 1, scale: 1,translateX:"0%", transition: { duration: 1 } },
       hidden: { opacity: 0, scale: 0 ,translateX:"60%"}
     };
     const textVariants = {
@@ -51,17 +51,17 @@ export default function Home(){
     }
       
      
-    return <Box bg="#e6e2e5" w="100%" color="#353232" >
+    return <Box bg="#e6e2e5" w="100%"  color="#353232" >
     <Navbar/>
     {/* <RecipeForm/> */}
-    <Box w="100%" p="1em" ref={ref} >
-      <Flex justify="space-around" w="100%" align={"center"} >
-      <Box  as={motion.div}   variants={textVariants}  animate={controls} initial="hidden">
-      <Heading fontSize={"8em"}>Food Recipe</Heading>
-      <Text fontSize={"2em"} >Helping you cook a variety of dishes from all over the world</Text>
+    <Box w="100%" p={["0","0","1em","1em","1em"]} ref={ref}  >
+      <Flex flexDir={["column-reverse","column-reverse","column-reverse","row","row"]}justify="space-around" w="100%" align={"center"} h={["80vh","80vh","80vh","80vh","80vh"]} >
+      <Box  as={motion.div}   variants={textVariants} p={["1em","1em","1em","1em","1em"]}  animate={controls} initial="hidden">
+      <Heading fontSize={["3em","3em","4em","7em","8em"]}>Food Recipe</Heading>
+      <Text fontSize={["1.2em","1.5em","2em","2em","2em"]} >Helping you cook a variety of dishes from all over the world</Text>
 
       </Box>
-      <Box w="50%"  as={motion.div}   variants={plateVariants}  animate={controls} initial="hidden" >
+      <Box w={["100%","80%","50%","50%","50%"]}  as={motion.div}   variants={plateVariants}  animate={controls} initial="hidden" >
       <Image  src="plate.png" />
 
       </Box>
@@ -69,7 +69,7 @@ export default function Home(){
       
       </Flex>
     </Box>
-    <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p="2em"> 
+    <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p={["1em","1em","2em","2em","2em"]} > 
       { recipes && recipes.map((rec,index)=>{
     return  <Recard  rec={rec} />
 

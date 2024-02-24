@@ -23,15 +23,15 @@ export default function RecipePage(){
 //     },[])
   console.log(recipe.prep_time%60);
 return (
-
-<Box align="center" p="1em 2em" bg="#3C3633">
+// bg="#3C3633"
+<Box align="center" p={["0.5em 1em","0.5em 1em","1em 2em","1em 2em","1em 2em"]} bg="#e6e2e5" >
     <Box align="left">
     <Button onClick={()=>{navigate(-1)}}><FaArrowLeft /></Button>
 
     </Box>
 
-    <Flex align="center" h="95vh" p="1em 3em">
-        <Box  w="50%" align="left">
+    <Flex align={["flex-start","flex-start","center","center","center"]} h="95vh" p={["0em","2em 0","1em 3em","1em 3em","1em 3em"]} flexDir={["column-reverse","column-reverse","row","row","row"]} justify={["space-around","space-around","center","center","center"]}>
+        <Box  w={["100%","100%","50%","50%","50%"]} align="left">
         <Text fontSize={"1.5em"}>Author -{recipe.authorId?.name && recipe.authorId.name.charAt(0).toUpperCase()+ recipe.authorId.name.slice(1).toLowerCase()} </Text>
         <Heading fontSize={"3em"}>{recipe.title}</Heading>
         <Flex justify="space-around" w="50%">
@@ -43,42 +43,42 @@ return (
     </Flex>
         </Box>
 
-            <Image w="50%"  h="100%" src={recipe.url} ></Image>
+            <Image w={["100%","100%","50%","50%","50%"]}  h={["50%","70%","100%","100%","100%"]} src={recipe.url} ></Image>
 
     </Flex>
 
 
-<Flex  p="1em 2em" align="center" justify="space-between" borderRadius={"1em"}>
+<Flex  p={["0.5em 1em","0.5em 1em","1em 2em","1em 2em","1em 2em"]} align="center" justify="space-between" borderRadius={"1em"} wrap="wrap">
 
-    <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" >
+    <Box my="0.5em" bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" >
         <Text>Prep<Text as="span" fontWeight="bold">{(recipe.prep_time/60>=1?`${recipe.prep_time/60}hr`:"")}{recipe.prep_time%60}m</Text></Text>
     </Box>
-    <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
+    <Box  my="0.5em" bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
     <Text>Cook<Text as="span" fontWeight="bold">{(recipe.cook_time/60>=1?`${recipe.cook_time/60}hr`:"")}{recipe.cook_time%60}m</Text></Text>
     </Box >
-    <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
+    <Box  my="0.5em" bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
     <Text>Total<Text as="span" fontWeight="bold">{(recipe.prep_time+recipe.cook_time)/60>=1?`${Math.floor((recipe.prep_time+recipe.cook_time)/60)}h `:""}{(recipe.cook_time+recipe.prep_time)%60}m</Text></Text>
     </Box>
-    <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
+    <Box  my="0.5em" bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
     <Text>Serving : {recipe.servings}</Text>
     </Box>
-    <Box bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
+    <Box  my="0.5em" bg="green.100" p="1em" borderRadius={"20px"} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"  >
     <Text>Calories :{recipe.caloriesPerServing}</Text>
     </Box>
 
 </Flex>
-<Flex p="2em" justify={"space-between"}>
-    <Box w="45%"  border={"1px solid black"} >
+<Flex p={["0em","0em","2em","2em","2em"]} justify={"space-between"} flexDir={["column", "column","row","row","row"]}>
+    <Box my="1em" bg="white" w={["100%","100%","45%","45%","45%"]}  border={"1px solid black"} >
     <Heading>INGREDIENTS</Heading>
 
 {recipe.ingredients && recipe.ingredients.map((ing,index)=>{
-    return<Flex bg="red.300" my="1em" w="80%" fontSize="1.5em" >
+    return<Flex my="1em" w={["90%","90%","80%","80%","80%"]} fontSize="1.5em" >
      <Text >{index+1} .</Text>
     <Text textAlign={"center"} >{ing}</Text></Flex>
 })}
 
     </Box>
-<Box w="50%" border={"1px solid black"} p="1em">
+<Box my="1em" bg="white" w={["100%","100%","50%","50%","50%"]} border={"1px solid black"} p="1em">
     <Heading>INSTRUCTION</Heading>
      <Box >
         {recipe.instructions && recipe.instructions.map((ins,index)=>{

@@ -20,14 +20,14 @@ for(let i=0;i<roundedRating;i++){
 }
 return (
  
- <Card onClick={viewRecipe} maxW='sm' bg="4A4A4A" >
+ <Card onClick={viewRecipe} maxW={['md','md','sm','sm','sm']} bg="4A4A4A" >
  {/* <Box> */}
  <Image
         src={rec.url}
         alt='recpie representation'
         borderRadius='lg'
         w="100%"
-        h="70%"
+        h={["70%","50%","70%","70%","70%"]}
       />
  {/* </Box> */}
     <CardBody>
@@ -52,12 +52,12 @@ return (
       { rec.tags.map((tag)=>{return
          })} */}
       {/*  */}
-      <Flex justify="space-between">
+      <Flex justify="space-between" align="center" wrap={"wrap"}>
       <Box p="0.2em 1em" borderRadius={"5px"} bg={rec.difficulty==="Easy"?"green.500":"red.400"}>
         <Text >{rec.difficulty}</Text>
     </Box>
     {rec.mealType.map((meal)=>{
-      return <Box p="0.2em 1em" borderRadius={"20px"} bg="pink.100">
+      return <Box p="0.2em 1em" borderRadius={"20px"} bg="pink.100" m="0.5em 0">
          <Text>{meal}</Text>
      </Box>
      
