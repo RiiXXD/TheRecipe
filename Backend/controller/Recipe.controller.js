@@ -60,4 +60,28 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  RecipeController.get("/search", async (req, res) => {
+    try {
+      const { q } = req.query; // Corrected from const {q} = req.query;
+      const recipes = await RecipeModel.find({
+        $or: [
+          { 
+            title: { $regex: q, $options: 'i' } 
+          }, // Case-insensitive search by title
+          { mealType: { $in: [q]  } }, // Search for exact match in mealType array
+          { tags: { $in: [q]   } } // Search for exact match in tags array
+        ]
+      });
+      if(recipes.length>0){
+        res.json({ recipes ,msg:"Found!"});
+      }
+      else{
+        res.json({ recipes,msg:"Not-found!" });
+        }
+    } catch (error) {
+      console.error('Error searching recipes:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
  module.exports=RecipeController;

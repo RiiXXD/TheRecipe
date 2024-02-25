@@ -1,4 +1,4 @@
-import { SINGLETON_RECIPE_REQUEST,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
+import { SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
 
 export const singleton=(id)=>async (dispatch)=>{
 dispatch({type:SINGLETON_RECIPE_REQUEST});
@@ -14,4 +14,22 @@ catch (err) {
 
 }
 
+}
+
+export const fetchSearchResults=(k)=>async(dispatch)=>{
+ try{   if(k===""||k===" ")
+    dispatch({type:SEARCH_RESULTS_NOT_FOUND});
+    else{
+    const search=await fetch(`http://localhost:8080/recipe/search/?q=${k}`)
+    const results=await search.json();
+    dispatch({type:SEARCH_RESULTS_FOUND,payload:results});
+
+   }}
+   catch(e){
+    dispatch({type:SEARCH_RESULTS_NOT_FOUND});
+
+   }
+    
+    
+ 
 }

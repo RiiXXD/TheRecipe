@@ -1,4 +1,4 @@
-import { SINGLETON_RECIPE_REQUEST,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
+import { SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
 
 
 const intitState={
@@ -6,6 +6,8 @@ const intitState={
     RecipeAuthor : {},
     isError : false,
     msg : '',
+    Searchs:[],
+    searchMsg: '',
     recipe:{},
     comments:{},
    }
@@ -38,6 +40,21 @@ export const reducer =(state=intitState,{type,payload})=>{
                     isError:true,
                     }
                 }
+                case SEARCH_RESULTS_NOT_FOUND:{
+                  return{  ...state,
+                    Searchs:[],
+                    searchMsg:"Not Found!"
+                  }
+
+                }
+                case SEARCH_RESULTS_FOUND:{
+                  return{  ...state,
+                    Searchs:[...payload.recipes],
+                    searchMsg:payload.msg,
+                  }
+
+                }
+                
                 
                 
         default:
