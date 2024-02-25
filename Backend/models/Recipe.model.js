@@ -14,7 +14,7 @@ const RecipeSchema=mongoose.Schema(
     cook_time: Number,
     total_time: String,
     servings: String,
-    comments: [mongoose.Schema.Types.ObjectId],
+    comments: [{type:mongoose.Schema.Types.ObjectId,ref:"Comments"}],
     mealType:[String],
     rating:Number,
     difficulty:String,

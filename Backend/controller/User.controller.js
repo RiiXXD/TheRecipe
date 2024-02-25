@@ -66,12 +66,12 @@ UserController.post("/login",async (req,res)=>{
              res.json({msg:"Succesfully login ",token,user:{ email:existingUser._doc.email, name:existingUser._doc.name,id:existingUser._doc._id,profileImg:existingUser._doc.profileImg}})
       }
       else{
-        res.json("invalid creds");
+        res.json({msg:"Invalid credentials"});
       }
     })}
         
     else{
-      res.json("Login First!")
+      res.json({msg:"Login First!"})
     }
             
         
