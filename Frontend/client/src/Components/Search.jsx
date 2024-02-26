@@ -38,7 +38,7 @@ console.log(searchs);
       <FaSearch color='gray.300' />
     </InputRightElement>
           </InputGroup>
-          <Box position={"absolute"} top="2%" zIndex="12" bg="white" left="40%" >
+          {/* <Box position={"absolute"} top="2%" zIndex="12" bg="white" right="40%" >
            { searchs && 
            searchs.map((rec)=>{
             return <Flex p="2em" align="center">
@@ -47,7 +47,7 @@ console.log(searchs);
                     <Text>{rec.title}</Text>
                     </Flex>
                    })}
-          </Box>
+          </Box> */}
           </>
     )
 }

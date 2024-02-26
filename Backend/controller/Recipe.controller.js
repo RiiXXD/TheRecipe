@@ -8,18 +8,25 @@ const RecipeController=Router();
 
 RecipeController.post("/postRecipe",authorization,async(req,res)=>{
   const authorId=req.body.userId;
-    const {title,ingredients,instructions,comments,prep_time,cook_time,total_time,servings,url}=req.body;
+    const {title,ingredients,instructions,comments,prep_time,cook_time,total_time,servings,url,cuisine,rating,difficulty,caloriesPerServing,tags,mealType,}=req.body;
      try{
         const recipe = new RecipeModel({
             title,
             authorId,
             ingredients,
             instructions,
-            comments,prep_time,
+            comments,
+            prep_time,
             cook_time,
             total_time,
             servings,
             url,
+            cuisine,
+            rating,
+            difficulty,
+            caloriesPerServing,
+            tags,
+            mealType,
             createdAt:Date.now(),
         })
         await recipe.save();
@@ -71,7 +78,7 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
           { mealType: { $in: [q]  } }, // Search for exact match in mealType array
           { tags: { $in: [q]   } } // Search for exact match in tags array
         ]
-      });
+      }).populate('authorId');
       if(recipes.length>0){
         res.json({ recipes ,msg:"Found!"});
       }

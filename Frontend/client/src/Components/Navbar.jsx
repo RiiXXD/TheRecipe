@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,useDisclosure,Stack
-  ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,Avatar
+  ,FormControl,Input,FormLabel,FormHelperText,FormErrorMessage,Avatar,Image
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useEffect } from 'react';
@@ -81,12 +81,13 @@ export default function Navbar(){
    setIsHovered(false);
  };
 
-    return <Flex minWidth='max-content' align='center' gap='2' p={["1em"]}>
+    return <Flex minWidth='max-content' align='center' gap='2' p={["1em"]} position={"relative"}>
     <Box p='2'>
       <Heading size='md'>Recipe Book</Heading>
     </Box>
     <Spacer  />
     <Search/>
+   
     <ButtonGroup gap='2' >
       {/* <Button onclick={openForm} colorScheme='teal'>Sign Up</Button> */}
       {!checkAuth &&<><Button   onClick={onOpen}>Sign Up</Button>
