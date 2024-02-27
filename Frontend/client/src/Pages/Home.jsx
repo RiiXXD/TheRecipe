@@ -19,7 +19,7 @@ export default function Home(){
 
   const controls = useAnimation();
   const searchs = useSelector((store)=> store.recipeReducer.Searchs)
-
+  const [pageNum, setPageNum] = useState(1);
   const [ref, inView] = useInView({ once: false });
   const plateVariants = {
       visible: { opacity: 1, scale: 1,translateX:"0%", transition: { duration: 1 } },
@@ -29,9 +29,16 @@ export default function Home(){
       visible: { opacity: 1, scale: 1,translateX:"0%", transition: { duration: 1 } },
       hidden: { opacity: 0, scale: 0 ,translateX:"-60%"}
     };
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+  
     useEffect(()=>{
       getRecipe();
-    },[])
+    },[pageNum])
     useEffect(() => {
       if (inView) {
         controls.start("visible");
@@ -54,12 +61,18 @@ export default function Home(){
     const animation = `${plate} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
     // const animationText=`${textVariants} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
     const getRecipe=async()=>{
-      const data=await fetch("http://localhost:8080/recipe/getRecipe");
+      const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=10`);
       const response=await data.json();
       console.log(response);
-      setRecipes(response.recipe);
+      setRecipes((prevData) => [...prevData,...response.recipe]);
     }
-      
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (Math.ceil(clientHeight + scrollTop) >= scrollHeight) {
+        setPageNum((prevPageNum) => prevPageNum + 1);
+        console.log("scrollHeight",pageNum);
+      }
+    }
      
     return <Box bg="#e6e2e5" w="100%"  color="#353232" >
     <Navbar/>

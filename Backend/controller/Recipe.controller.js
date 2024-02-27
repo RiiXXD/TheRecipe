@@ -38,7 +38,12 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
  })
  RecipeController.get("/getRecipe",async(req,res)=>{
      try{
-        const recipe = await RecipeModel.find({}).populate('authorId') 
+         const { page = 1, limit = 8 } = req.query;
+         const pageNumber = parseInt(page);
+         const limitNumber = parseInt(limit);
+        const recipe = await RecipeModel.find({}).populate('authorId').skip((pageNumber - 1) * limitNumber)
+        .limit(limitNumber);
+  
             res.json({recipe});
         }
         
