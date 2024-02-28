@@ -74,12 +74,10 @@ export default function Navbar(){
  const [isHovered, setIsHovered] = useState(false);
 
  const handleMouseEnter = () => {
-   setIsHovered(true);
+ navigate(`/editUser/${user.id}`);
  };
 
- const handleMouseLeave = () => {
-   setIsHovered(false);
- };
+
 
     return <Flex minWidth='max-content' align='center' gap='2' p={["1em"]} position={"relative"}>
     <Box p='2'>
@@ -154,22 +152,11 @@ export default function Navbar(){
 </ButtonGroup> }
     </ButtonGroup>
     {checkAuth && <Stack align={"center"}>
-  <Avatar onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave} size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
+  <Avatar onClick={handleMouseEnter}
+    size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
   </Stack>}
-  {isHovered && <HoverME onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave} user={user}/>}
+  
   </Flex>
 
 }
 
-function HoverME(user){
-
-  return(
-<Box position={"absolute"} top="2%" right="0"  > 
- <Text fontSize={"0.6em"}>{user.name}</Text>
-  <Divider/>
-  <Button>Edit Profile</Button>
-</Box>
-  )
-}
