@@ -74,7 +74,7 @@ export default function Navbar(){
  const [isHovered, setIsHovered] = useState(false);
 
  const handleMouseEnter = () => {
- navigate(`/editUser/${user.id}`);
+ navigate(`/editUser`);
  };
 
 

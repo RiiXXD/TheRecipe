@@ -3,7 +3,7 @@ import Home from "../Pages/Home";
 import RecipePage from "../Pages/RecipePage";
 import React from 'react';
 import RecipeForm  from "../Pages/Form";
-import { Profile } from "react";
+import Profile from "../Pages/Profile";
 
 export default function AllRoutes(){
     return <>
@@ -12,7 +12,7 @@ export default function AllRoutes(){
     <Route path="/postRecipe" element={<RecipeForm/>}></Route>
 
     <Route path="/viewRecipe/:id" element={<RecipePage/>}></Route>
-    <Route path="/editUser/:id" element={<Profile/>}></Route>
+    <Route path="/editUser" element={<Profile/>}></Route>
 
     </Routes></>
 }
