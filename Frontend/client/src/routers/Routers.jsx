@@ -12,7 +12,8 @@ export default function AllRoutes(){
     <Route path="/postRecipe" element={<RecipeForm/>}></Route>
 
     <Route path="/viewRecipe/:id" element={<RecipePage/>}></Route>
-    <Route path="/editUser" element={<Profile/>}></Route>
+    <Route path="/profile" element={<Profile/>}></Route>
+    <Route path="/editprofile" element={<Edit/>}></Route>
 
     </Routes></>
 }
