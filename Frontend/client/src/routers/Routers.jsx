@@ -4,7 +4,7 @@ import RecipePage from "../Pages/RecipePage";
 import React from 'react';
 import RecipeForm  from "../Pages/Form";
 import Profile from "../Pages/Profile";
-
+import Edit from "../Pages/Edit";
 export default function AllRoutes(){
     return <>
     <Routes>
