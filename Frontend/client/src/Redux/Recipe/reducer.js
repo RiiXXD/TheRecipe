@@ -1,7 +1,8 @@
-import { SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
+import {GET_RECIPE_SUCCESS,SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
 
 
 const intitState={
+    recipes:[],
     isLoading : false,
     RecipeAuthor : {},
     isError : false,
@@ -14,6 +15,13 @@ const intitState={
 
 export const reducer =(state=intitState,{type,payload})=>{
     switch(type){
+      case GET_RECIPE_SUCCESS:{
+        return {
+          ...state,
+          isLoading:false,
+          recipes:[...state.recipes,...payload]
+        }
+      }
         case SINGLETON_RECIPE_REQUEST : {
             return {
               ...state,

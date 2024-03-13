@@ -40,7 +40,7 @@ console.log(recipes,data);
       <Box >
          </Box>
         <Flex  align="center" justify={"space-around"} w="60%" margin={"0 auto"}>
-        <Image name={user.name} maxW="200px" maxH="200px" minW="200px" minH="150px" borderRadius="50%" src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
+        <Image name={user.name} maxW="200px" maxH="200px" minW="200px" minH="150px" borderRadius="50%" src={user.profileImg?`${baseUrl}uploads/${user.profileImg}`:'https://bit.ly/broken-link'} />
         <Spacer/>
         <Box>
         <Heading fontSize={"3.5em"}>{user.name}</Heading>

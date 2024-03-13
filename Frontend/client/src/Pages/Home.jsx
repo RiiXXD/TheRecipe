@@ -6,7 +6,7 @@ import { Grid ,Box, Heading,Text,Image,Flex,Spacer, Divider} from '@chakra-ui/re
 import { useDispatch } from 'react-redux';
 import { SINGLETON_RECIPE_SUCCESS } from "../Redux/Recipe/action-type";
 import { useNavigate } from 'react-router-dom';
-
+import { getRecipe } from '../Redux/Recipe/action';
 import { useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink, LinkProps,keyframes } from '@chakra-ui/react'
@@ -19,6 +19,8 @@ export default function Home(){
 
   const controls = useAnimation();
   const searchs = useSelector((store)=> store.recipeReducer.Searchs)
+  const recipes=useSelector((store)=>store.recipeReducer.recipes)
+
   const [pageNum, setPageNum] = useState(1);
   const [ref, inView] = useInView({ once: false });
   const plateVariants = {
@@ -37,7 +39,7 @@ export default function Home(){
     }, []);
   
     useEffect(()=>{
-      getRecipe();
+      dispatch(getRecipe(pageNum));
     },[pageNum])
     useEffect(() => {
       if (inView) {
@@ -49,7 +51,7 @@ export default function Home(){
     
     const navigate=useNavigate();
 
-    const [recipes,setRecipes]=useState([]);
+    // const [recipes,setRecipes]=useState([]);
     const plate = keyframes`
     0% { transform:translateX(70%);}
     25% {translate:transformX(60%); }
@@ -60,12 +62,12 @@ export default function Home(){
 
     const animation = `${plate} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
     // const animationText=`${textVariants} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
-    const getRecipe=async()=>{
-      const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=10`);
-      const response=await data.json();
-      console.log(response);
-      setRecipes((prevData) => [...prevData,...response.recipe]);
-    }
+    // const getRecipe=async()=>{
+    //   const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=10`);
+    //   const response=await data.json();
+    //   console.log(response);
+    //   setRecipes((prevData) => [...prevData,...response.recipe]);
+    // }
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
       if (Math.ceil(clientHeight + scrollTop) >= scrollHeight) {

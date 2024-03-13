@@ -108,5 +108,35 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  RecipeController.delete('/delete/:id/:userID', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { userID } = req.params;
+
+
+      console.log(id,"authorId",userID)
+      // Check if the user is authorized to delete the recipe
+      const recipe = await RecipeModel.findById(id);
+      if (!recipe) {
+        return res.status(404).json({ message: 'Recipe not found' });
+      }
+      if (recipe.authorId.toString()!== userID) {
+        console.log("recipe","userID")
+        return res.status(403).json({ message: 'Unauthorized: You do not have permission to delete this recipe' });
+      }
   
+      // If the user is authorized, proceed with deletion
+      const deletedRecipe = await RecipeModel.findByIdAndDelete(id);
+      if (!deletedRecipe) {
+        return res.status(404).json({ message: 'Recipe not found' });
+      }
+      else{
+        res.status(200).json({ message: 'Recipe deleted successfully' });
+
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
  module.exports=RecipeController;

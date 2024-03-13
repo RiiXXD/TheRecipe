@@ -6,6 +6,7 @@ const authorization=require("../middlewares/auth.middleware");
 const {passport} = require('../utils/google.auth');
 const { redirect } = require("react-router-dom");
 const { authenticate } = require("passport");
+const multer = require('multer');
 
 require('dotenv').config()
 const UserController=Router();
@@ -96,26 +97,66 @@ UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 
 })
-// UserController.get("/getUserDetails",async(req,res)=>{
-//   jwt.verify(req.token,process.env.EncryptionKey,function(err,decoded){
-//   if(decoded){
-//     userId=decoded.req.userId;
-//     const existingUser= UserModel.findOne({userId});
-//     if(existingUser){
-//     res.json({message:"authenticated!",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
-//     }
-//     }
-//   else{
-//     res.json({err})
-//       console.log("error occured while login",err)
-//   }
-//   // if (req.session.user) {
-//   //   // Access user details from the session
-//   //   const user = req.session.user;
-//   //   res.json( { user });
-//   // } 
-// }
-// )})
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Specify the directory where uploaded files should be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) // Use the original file name for the uploaded file
+  }
+});
 
+const upload = multer({ storage: storage });
+UserController.put("/editProfile/:userId",upload.single('profileImg'),async(req,res)=>{
+try{
+  const userId = req.params.userId;
+  const { name } = req.body;
+  let profileImg = ""; // Initialize profileImg variable
+
+  // Check if a file was uploaded
+  if (req.file) {
+      profileImg = req.file.filename;
+      console.log("checkInside",profileImg,req.file); // Use the filename saved by multer
+  }
+  console.log("checkOutside",req.file); // Use the filename saved by multer
+
+  const user = await UserModel.findById(userId);
+  if (!user) {
+    return res.status(404).json({ msg: 'User not found' });
+}
+if (name) {
+  user.name = name;
+}
+if (profileImg) {
+  user.profileImg = profileImg;
+}
+await user.save();
+res.status(200).json({ message: 'User details updated successfully.', user });
+}
+catch(e){
+  console.log('Error updating user details:', e);
+  res.status(500).json({ message: 'Internal server error.' });
+}
+})
+UserController.post('/like/:userId/:recipeId', async (req, res) => {
+  const { userId, recipeId } = req.params;
+  try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      // Check if the recipe is already liked
+      if (!user.likedRecipes.includes(recipeId)) {
+          user.likedRecipes.push(recipeId);
+          await user.save();
+          res.json({ message: 'Recipe liked successfully' });
+      } else {
+          res.status(400).json({ message: 'Recipe already liked' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 module.exports=UserController;

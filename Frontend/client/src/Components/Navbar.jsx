@@ -153,7 +153,7 @@ export default function Navbar(){
     </ButtonGroup>
     {checkAuth && <Stack align={"center"}>
   <Avatar onClick={handleMouseEnter}
-    size="md" name={user.name} src={user.profileImg?user.profileImg:'https://bit.ly/broken-link'} />
+    size="md" name={user.name} src={user.profileImg?`${baseUrl}uploads/${user.profileImg}`:'https://bit.ly/broken-link'} />
   </Stack>}
   
   </Flex>

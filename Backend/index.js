@@ -16,6 +16,13 @@ const {passport} = require('./utils/google.auth')
 
 app.use(cors());
 app.use(express.json());
+const path = require('path');
+
+// Define the directory for static files
+const uploadsDirectory = path.join(__dirname, 'uploads');
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(uploadsDirectory));
 app.use(session({
   secret:process.env.EncryptionKey,
   resave:false,

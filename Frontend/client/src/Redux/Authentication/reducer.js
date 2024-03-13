@@ -1,5 +1,5 @@
 
-import { SIGN_SUCCESS,SIGN_REQUEST,SIGN_ERROR,LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST } from "./action-type"
+import { SIGN_SUCCESS,SIGN_REQUEST,SIGN_ERROR,LOGIN_FAILURE,EDIT_SUCCESSFUL, EDIT_FAILURE,LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST } from "./action-type"
 
 const intitState={
     isLoading : false,
@@ -83,6 +83,17 @@ export const reducer =(state=intitState,{type,payload})=>{
                     checkAuth : false,
                 }
                 }
+                case EDIT_SUCCESSFUL:{
+                    return{
+                        ...state,
+                        msg:payload.message,
+                        user:{...state.user,name:payload.user.name,profileImg:payload.user.profileImg},
+                    }
+                }
+                case EDIT_FAILURE:{
+                    return{
+
+                    }}
                 
         default:
             {
