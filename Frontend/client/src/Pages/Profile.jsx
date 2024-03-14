@@ -3,7 +3,7 @@ import Recard from '../Components/Card';
 
 import {
     Text,Textarea,Button,Box,Flex,Image,Grid,Stat,StatLabel,StatNumber
-    ,FormControl,Input,FormLabel,useToast, Checkbox, CheckboxGroup, Stack,FormHelperText, Heading, Spacer
+    ,FormControl,Input,FormLabel,useToast, Checkbox, CheckboxGroup, Stack,FormHelperText, Heading, Spacer, Avatar
   } from '@chakra-ui/react'
   import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
@@ -40,10 +40,10 @@ console.log(recipes,data);
       <Box >
          </Box>
         <Flex  align="center" justify={"space-around"} w="60%" margin={"0 auto"}>
-        <Image name={user.name} maxW="200px" maxH="200px" minW="200px" minH="150px" borderRadius="50%" src={user.profileImg?`${baseUrl}uploads/${user.profileImg}`:'https://bit.ly/broken-link'} />
+        <Avatar  name={user.name} size="xl" src={user.profileImg?`${baseUrl}uploads/${user.profileImg}`:'https://bit.ly/broken-link'} />
         <Spacer/>
         <Box>
-        <Heading fontSize={"3.5em"}>{user.name}</Heading>
+        <Heading fontSize={"3em"}>{user.name}</Heading>
        <Button  mt="1em" onClick={()=>{navigate("/editProfile")}}>Edit Profile</Button>
         </Box>
        
@@ -63,7 +63,7 @@ console.log(recipes,data);
     <TabOne recipes={recipes}/>
     </TabPanel>
     <TabPanel>
-      <p>two!</p>
+      <Heading>This Feature Coming Soon !</Heading>
     </TabPanel>
     <TabPanel>
       <p>three!</p>
@@ -80,12 +80,16 @@ console.log(recipes,data);
 
 const TabOne=({recipes})=>{
 return (
+  <> 
     <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p={["1em","1em","2em","2em","2em"]} > 
     {recipes && recipes.map((rec,index)=>{
   return  <Recard  rec={rec} key={index} />
 
 })} 
-
 </Grid>
+   {recipes.length==0 &&   <Heading textAlign="center">NO POST YET!!</Heading>} 
+   </>
+  
+
 )
 }

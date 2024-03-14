@@ -29,7 +29,6 @@ export default function Search() {
   
 
  
-console.log(searchs);
     return(
       <>
         <InputGroup w="40%">
@@ -38,16 +37,7 @@ console.log(searchs);
       <FaSearch color='gray.300' />
     </InputRightElement>
           </InputGroup>
-          {/* <Box position={"absolute"} top="2%" zIndex="12" bg="white" right="40%" >
-           { searchs && 
-           searchs.map((rec)=>{
-            return <Flex p="2em" align="center">
-           
-                   <Image w="60px" h="70px" src={rec.url}></Image>
-                    <Text>{rec.title}</Text>
-                    </Flex>
-                   })}
-          </Box> */}
+          
           </>
     )
 }

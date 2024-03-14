@@ -1,4 +1,4 @@
-import {GET_RECIPE_SUCCESS,SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL } from "./action-type";
+import {GET_RECIPE_SUCCESS,SINGLETON_RECIPE_REQUEST,SEARCH_RESULTS_FOUND,SEARCH_RESULTS_NOT_FOUND,SINGLETON_RECIPE_SUCCESS,SINGLETON_RECIPE_FAIL,DELETE_SUCESS } from "./action-type";
 
 
 const intitState={
@@ -11,6 +11,9 @@ const intitState={
     searchMsg: '',
     recipe:{},
     comments:{},
+    reload:false,
+    total:0,
+    pageNum:1,
    }
 
 export const reducer =(state=intitState,{type,payload})=>{
@@ -19,7 +22,10 @@ export const reducer =(state=intitState,{type,payload})=>{
         return {
           ...state,
           isLoading:false,
-          recipes:[...state.recipes,...payload]
+          recipes:[...state.recipes,...payload.recipe],
+          total:payload.total_count,
+          pageNum:payload.pageNum,
+
         }
       }
         case SINGLETON_RECIPE_REQUEST : {
@@ -62,7 +68,16 @@ export const reducer =(state=intitState,{type,payload})=>{
                   }
 
                 }
-                
+                case DELETE_SUCESS:
+                 
+                  const updatedRecipes = state.recipes.filter(recipe => recipe._id !== payload.recId);
+                  console.log()
+                  return {
+                      ...state,
+                      recipes: [...updatedRecipes],
+                      msg:payload.msg,
+                      reload:!state.reload,
+                  };
                 
                 
         default:

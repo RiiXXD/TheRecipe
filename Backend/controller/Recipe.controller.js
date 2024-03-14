@@ -43,15 +43,10 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
          const limitNumber = parseInt(limit);
         const recipe = await RecipeModel.find({}).populate('authorId').skip((pageNumber - 1) * limitNumber)
         .limit(limitNumber);
-  
-            res.json({recipe});
+        const total_count=await RecipeModel.find({}).count();
+            res.json({recipe,total_count});
         }
-        
-
-        
-        
-      
-     catch(e){console.log("error",e);
+    catch(e){console.log("error",e);
      res.json({message:e});}
  })
  

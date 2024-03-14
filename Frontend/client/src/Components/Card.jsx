@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card,ButtonGroup,Box, Button,Divider,Image,CardBody, CardFooter,Heading,Stack,Text, Flex} from '@chakra-ui/react'
 import { IoStar,IoStarHalf } from "react-icons/io5";
 import {useDispatch,useSelector} from "react-redux";
@@ -7,17 +7,18 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaRegHeart ,FaHeart} from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import {liked,unLiked} from '../Redux/Authentication/action';
-import { getRecipe } from '../Redux/Recipe/action';
 
 export default function Recard( {rec}){
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const user=useSelector((store)=>store.authReducer.user)
+  const recipes=useSelector((store)=>store.recipeReducer.recipes)
 
 
   const stars = [];
   const [saved,setSaved]=useState(false);
   const [likedRecipe,setLikedRecipe]=useState([]);
+  
 const viewRecipe=()=>{
   dispatch(singleton(rec._id))
   navigate(`/viewRecipe/${rec._id}`)
@@ -43,10 +44,11 @@ const deleteRecipe=()=>{
   console.log("hey")
   dispatch(delRecipe(rec._id,user.id))
   // dispatch(getRecipe(1));
+  console.log("after deleting",recipes)
 
 }
 return (
- <Box position={"relative"}>
+ <Box position={"relative"} >
   <Flex  position={"absolute"} right={0} zIndex={"2"}>
  {     (user.id===rec.authorId._id) && <Button  background={"rgba(6,0,6,0.5)"} onClick={deleteRecipe}> <RiDeleteBin6Fill color="white" /></Button> 
 }
@@ -72,8 +74,8 @@ return (
       {/* <Text>Ingredients Count -{rec.ingredients.length}</Text> */}
       <Flex justify={"space-between"} align="center">
       <Flex >
-      {stars.map((star)=>{
-        return <Text>{star}</Text>
+      {stars.map((star,index)=>{
+        return <Text key={index}>{star}</Text>
       })}
 
       </Flex>

@@ -14,11 +14,18 @@ catch (err) {
 }
 
 }
-export const getRecipe=(pageNum)=>async(dispatch)=>{
-    const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=10`);
+export const getRecipe=(pageNum,limit,total,prevPage)=>async(dispatch)=>{
+ try {  
+   const upperPageLimit=Math.ceil(total/limit);
+   if(pageNum===1||upperPageLimit>=pageNum && pageNum !==prevPage)
+   {
+        const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=${limit}`);
     const response=await data.json();
-    dispatch({type:GET_RECIPE_SUCCESS,payload:response.recipe})
+    dispatch({type:GET_RECIPE_SUCCESS,payload:{recipe:response.recipe,total_count:response.total_count,pageNum}})
     console.log(response);
+ }
+    }
+    catch(e){console.log(e);}
     // setRecipes((prevData) => [...prevData,...response.recipe]);
   }
 export const fetchSearchResults=(k)=>async(dispatch)=>{
@@ -47,8 +54,10 @@ export const delRecipe=(recId,userID)=>async(dispatch)=>{
  
         const data=await res.json();
         // dispatch({type:DELETE_SUCESS});
-        // dispatch(getRecipe(1));
-        console.log(data);
+        dispatch({
+            type: DELETE_SUCESS,
+            payload: {recId,msg:data.message} 
+        });
     }
     catch(e){
         // dispatch({type:DELETE_ERROR});

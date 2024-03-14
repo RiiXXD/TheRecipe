@@ -11,7 +11,8 @@ const multer = require('multer');
 require('dotenv').config()
 const UserController=Router();
 UserController.get("/test",(req,res)=>{
-    res.json("working")
+  if(req.session.user) res.json({user:req.session.user})
+  else res.json("working")
 })
 
 UserController.post("/sign",async(req,res)=>{
@@ -83,16 +84,15 @@ UserController.get('/auth/google',
   );
 
   UserController.get('/auth/google/callback', 
-    passport.authenticate('google', { failureRedirect: '/login',session:false }),
-    function(req, res) {
-      // const accessToken = req.user.tokens.access_token;
-      console.log('Successfully signed in');
-      console.log('Token:', req.user.token);
-      console.log('User:', req.user.name);
-      res.json({ user, token });
-      console.log('Successfully signed in') 
-      res.json(token);
-      });
+  passport.authenticate('google', { failureRedirect: '/login', session: false }), function(req, res) {
+    const userData = {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        profileImg: req.user.profileImg,
+        token: req.user.token
+    };
+    res.json(userData);});
 UserController.get("/edit",authorization,async (req,res)=>{
 res.json("login aftermath")
 

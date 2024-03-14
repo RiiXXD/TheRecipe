@@ -66,23 +66,23 @@ app.get("/", async (req,res)=>{
 //   );
 app.get('/auth/google/callback', 
 passport.authenticate('google', {
-  successRedirect:"/login/sucess",
+  // successRedirect:"http://localhost:3000/",
   failureRedirect: '/failed',
 }),
 function (req, res) {
-  console.log(req);
-  res.json(req.user);
+  req.session.user = req.user;
+  res.redirect("http://localhost:3000/")
 
 }
 );
   app.get("/login/sucess",async(req,res)=>{
-    console.log(req);
+    
     if(req.user){
-        // res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
+        res.status(200).json({message:"user SignedUp",user:{ id: req.user._id, name: req.user.name, email: req.user.email, profileImg:req.user.profileImg}})
         // // res.redirect(`http://localhost:3000/?id=<${req.user._id}>&name=${req.user.name}&email=${req.user.email}&profileImg=${req.user.profileImg}&token=${req.user.token}`)
         // res.redirect(`http://localhost:3000/?user=${req.user._id}`)
-        req.session.user = req.user; // Assuming req.user contains user details from Google authentication
-        res.redirect('http://localhost:3000/');  
+        // req.session.user = req.user; // Assuming req.user contains user details from Google authentication
+        // res.redirect('http://localhost:3000/');  
       }else{
         res.status(400).json({message:"Not Authenticated!"})
     }

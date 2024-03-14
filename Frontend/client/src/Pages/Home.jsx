@@ -20,8 +20,13 @@ export default function Home(){
   const controls = useAnimation();
   const searchs = useSelector((store)=> store.recipeReducer.Searchs)
   const recipes=useSelector((store)=>store.recipeReducer.recipes)
+  const total=useSelector((store)=>store.recipeReducer.total)
+  const pageNum=useSelector((store)=>store.recipeReducer.pageNum)
+  const msg=useSelector((store)=>store.recipeReducer.msg)
+  const limit=5;
+  const upperPageLimit=Math.ceil(total/limit);
 
-  const [pageNum, setPageNum] = useState(1);
+  const [page, setPage] = useState(pageNum);
   const [ref, inView] = useInView({ once: false });
   const plateVariants = {
       visible: { opacity: 1, scale: 1,translateX:"0%", transition: { duration: 1 } },
@@ -37,10 +42,10 @@ export default function Home(){
         window.removeEventListener('scroll', handleScroll);
       };
     }, []);
-  
+    
     useEffect(()=>{
-      dispatch(getRecipe(pageNum));
-    },[pageNum])
+      (dispatch(getRecipe(page,limit,total,pageNum)));
+    },[page])
     useEffect(() => {
       if (inView) {
         controls.start("visible");
@@ -59,19 +64,12 @@ export default function Home(){
     50% {transform: rotate(-20deg); translate:transformX(30%); }
     100% {transform:rotate(0deg); translate:transformX(0%); }
 `;
-
     const animation = `${plate} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
-    // const animationText=`${textVariants} 2s cubic-bezier(0.1, 0.5, 0.7, 1) 0.5s`;
-    // const getRecipe=async()=>{
-    //   const data=await fetch(`http://localhost:8080/recipe/getRecipe?page=${pageNum}&limit=10`);
-    //   const response=await data.json();
-    //   console.log(response);
-    //   setRecipes((prevData) => [...prevData,...response.recipe]);
-    // }
+  
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
       if (Math.ceil(clientHeight + scrollTop) >= scrollHeight) {
-        setPageNum((prevPageNum) => prevPageNum + 1);
+        setPage((prevPageNum) => prevPageNum + 1);
         console.log("scrollHeight",pageNum);
       }
     }
@@ -118,7 +116,7 @@ export default function Home(){
    
     <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p={["1em","1em","2em","2em","2em"]} > 
       { recipes && recipes.map((rec,index)=>{
-    return  <Recard  rec={rec} />
+    return  <Recard  key={rec._id} rec={rec} />
 
   })}
 
