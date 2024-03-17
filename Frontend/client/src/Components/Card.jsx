@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card,ButtonGroup,Box, Button,Divider,Image,CardBody, CardFooter,Heading,Stack,Text, Flex} from '@chakra-ui/react'
+import { Card,ButtonGroup,Box, Button,Divider,Image,CardBody, CardFooter,Heading,Stack,Text, Flex,Avatar} from '@chakra-ui/react'
 import { IoStar,IoStarHalf } from "react-icons/io5";
 import {useDispatch,useSelector} from "react-redux";
 import { singleton ,delRecipe} from '../Redux/Recipe/action';
@@ -12,7 +12,10 @@ export default function Recard( {rec}){
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const user=useSelector((store)=>store.authReducer.user)
+  const token=useSelector((store)=>store.authReducer.token)
+
   const recipes=useSelector((store)=>store.recipeReducer.recipes)
+  const baseUrl="http://localhost:8080/";
 
 
   const stars = [];
@@ -32,7 +35,6 @@ const handleLiked=()=>{
    if(!saved) {
     dispatch(liked(user.id,rec._id));
     setLikedRecipe([...likedRecipe,rec._id])
-    console.log(likedRecipe);
 
   }
    else{
@@ -41,11 +43,7 @@ const handleLiked=()=>{
 }
 
 const deleteRecipe=()=>{
-  console.log("hey")
-  dispatch(delRecipe(rec._id,user.id))
-  // dispatch(getRecipe(1));
-  console.log("after deleting",recipes)
-
+  dispatch(delRecipe(rec._id,token))
 }
 return (
  <Box position={"relative"} >
@@ -71,19 +69,23 @@ return (
        
 
       </Flex>
-      {/* <Text>Ingredients Count -{rec.ingredients.length}</Text> */}
       <Flex justify={"space-between"} align="center">
+      
+      <Flex align={"center"} >
+      <Avatar size="sm" name={rec.authorId.name} src={rec.authorId.profileImg?`${baseUrl}uploads/${rec.authorId.profileImg}`:'https://bit.ly/broken-link'} />
+
+{     (user.id!==rec.authorId._id) && <Text fontSize={"0.6em"}> {rec.authorId ? rec.authorId.name : 'Unknown'}</Text> 
+}
+{     (user.id===rec.authorId._id) && <Text fontSize={"0.6em"}> {rec.authorId ? "You": 'Unknown'}</Text> 
+}
+      </Flex>
+
       <Flex >
       {stars.map((star,index)=>{
         return <Text key={index}>{star}</Text>
       })}
 
       </Flex>
-{     (user.id!==rec.authorId._id) && <Text fontSize={"0.8em"}> By-{rec.authorId ? rec.authorId.name : 'Unknown'}</Text> 
-}
-{     (user.id===rec.authorId._id) && <Text fontSize={"0.8em"}> By-{rec.authorId ? "You": 'Unknown'}</Text> 
-}
-
       </Flex>
       {/* 
       { rec.tags.map((tag)=>{return

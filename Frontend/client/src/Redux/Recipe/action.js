@@ -45,11 +45,13 @@ export const fetchSearchResults=(k)=>async(dispatch)=>{
     
  
 }
-export const delRecipe=(recId,userID)=>async(dispatch)=>{
+export const delRecipe=(recId,token)=>async(dispatch)=>{
     try{
-        console.log(userID,recId)
-        const res=await fetch(`http://localhost:8080/recipe/delete/${recId}/${userID}`,
-        {method:"DELETE"})
+        const res=await fetch(`http://localhost:8080/recipe/delete/${recId}`,
+        {method:"DELETE",
+        headers: {
+            'Authorization': `Bearer ${token}`
+          }})
         // dispatch({type:DELETE_REQUEST});
  
         const data=await res.json();

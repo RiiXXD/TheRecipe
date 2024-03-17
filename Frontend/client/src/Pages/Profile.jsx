@@ -13,6 +13,8 @@ import { FaArrowLeft } from "react-icons/fa";
 export default function Profile() {
   const navigate=useNavigate();
   const user = useSelector((store)=> store.authReducer.user)
+  const token = useSelector((store)=> store.authReducer.token)
+
   useEffect(()=>{
     getUserRecipe();
   },[])
@@ -22,7 +24,10 @@ export default function Profile() {
 
 const getUserRecipe = async() => {
 try{
-const res= await fetch(`${baseUrl}recipe/getUserRecipe/${user.id}`);
+const res= await fetch(`${baseUrl}recipe/getUserRecipe`,
+{headers: {
+  'Authorization': `Bearer ${token}`
+}});
 const data = await res.json();
 setRecipes([...data.recipe]);
 console.log(recipes,data);

@@ -65,10 +65,9 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
       res.status(500).json({ message: 'Internal server error' });
     }
   });
-  RecipeController.get("/getUserRecipe/:id", async (req, res) => {
+  RecipeController.get("/getUserRecipe", authorization,async (req, res) => {
     try {
-      const userId = req.params.id;
-      console.log(userId);
+      const userId =req.body.userId;
       const recipe= await RecipeModel.find({ authorId: userId });
       if (!recipe) {
         return res.status(404).json({ message: 'No Shares Yet' });
@@ -80,6 +79,7 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  //done
   RecipeController.get("/search", async (req, res) => {
     try {
       const { q } = req.query; // Corrected from const {q} = req.query;
@@ -96,28 +96,26 @@ RecipeController.post("/postRecipe",authorization,async(req,res)=>{
         res.json({ recipes ,msg:"Found!"});
       }
       else{
-        res.json({ recipes,msg:"Not-found!" });
+        res.json({ recipes,msg:"Not Found!" });
         }
     } catch (error) {
       console.error('Error searching recipes:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   });
-  RecipeController.delete('/delete/:id/:userID', async (req, res) => {
+  //done
+  RecipeController.delete('/delete/:id',authorization, async (req, res) => {
     try {
       const { id } = req.params;
-      const { userID } = req.params;
-
-
-      console.log(id,"authorId",userID)
-      // Check if the user is authorized to delete the recipe
-      const recipe = await RecipeModel.findById(id);
+      const userID =req.body.userId;
+       const recipe = await RecipeModel.findById(id);
       if (!recipe) {
+
         return res.status(404).json({ message: 'Recipe not found' });
       }
       if (recipe.authorId.toString()!== userID) {
-        console.log("recipe","userID")
-        return res.status(403).json({ message: 'Unauthorized: You do not have permission to delete this recipe' });
+
+        return res.status(403).json({ message: 'Unauthorized: You do not have permission to delete this recipe' ,userID,id});
       }
   
       // If the user is authorized, proceed with deletion

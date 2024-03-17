@@ -116,7 +116,7 @@ export default function Home(){
    
     <Grid templateColumns={['repeat(1, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']} gap={7} p={["1em","1em","2em","2em","2em"]} > 
       { recipes && recipes.map((rec,index)=>{
-    return  <Recard  key={rec._id} rec={rec} />
+    return  <Recard  key={index} rec={rec} />
 
   })}
 

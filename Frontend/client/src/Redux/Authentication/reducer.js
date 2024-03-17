@@ -8,7 +8,7 @@ const intitState={
     loggedInUsers:[],
     isError : false,
     msg : '',
-   
+     
     loginMsg:"",
     isRegistered:false,
     token:"",
@@ -33,6 +33,7 @@ export const reducer =(state=intitState,{type,payload})=>{
                   isError:false,
                   checkAuth : true,
                   msg:payload.msg,
+                 
                 }}
                 case SIGN_ERROR:{
                     console.log(payload);
@@ -55,11 +56,12 @@ export const reducer =(state=intitState,{type,payload})=>{
                         console.log(payload);
                        return { 
                         ...state,
-                        user:{...payload.user,token:payload.token},
+                        user:{...payload.user},
                         isLoading :false,
                         isError:false,
                         checkAuth : payload.user?true:false,
                         msg:payload.msg,
+                        token:payload.token
                     }
                     }
                     case LOGIN_FAILURE:{

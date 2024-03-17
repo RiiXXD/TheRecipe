@@ -10,8 +10,8 @@ jwt.verify(token,process.env.EncryptionKey,function(err,decoded){
       next();
     }
     else{
-        res.json(`Not authenticated Login again! ${req.headers.authorization.split(" ")[1]}`)
-        console.log("error occured while login",err)
+        res.json(`Not Authorized Login again! ${req.headers.authorization.split(" ")[1]}`)
+        console.log("Error occured while login",err)
     }
 })
 }

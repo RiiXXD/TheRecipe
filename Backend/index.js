@@ -51,7 +51,19 @@ app.post('/upload', upload.single('recipeImage'), (req, res) => {
 });
 app.get("/", async (req,res)=>{
   const posts = await RecipeModel.find();
-  res.status(200).json({posts});
+  res.status(200).json({endpoints:{
+    "user":{
+    "/login":"login",
+    "/sign":"Sign up",
+    "/editProfile/:userId":"Edit User Details",
+},
+    "recipe":{ "/getRecipe":"To get all recipes",
+    "/getRecipe/:recipeId":"Get Recipe With Recipe ID recipeId",
+    "/getRecipe/:userId":"Get Recipes Posted By User with User ID userId",
+    "/search":"Search recipes With Query",
+    "/delete/:id/:userID":"Delete Recipe",
+     "/postRecipe":"To Post Recipe",}
+  }});
  
 })
 // app.get('/auth/google/callback', 

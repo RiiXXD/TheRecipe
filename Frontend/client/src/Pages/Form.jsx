@@ -5,8 +5,11 @@ import {
   } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
+import {useDispatch,useSelector} from "react-redux";
+
 export default function RecipeForm() {
   const navigate=useNavigate();
+  const token=useSelector((store)=>store.authReducer.token)
   const toast = useToast()
     const [title, setTitle] = useState(''); // Initial state with one empty ingredient field
     // const [authorId,setAuthorId] = useState('');
@@ -16,7 +19,6 @@ export default function RecipeForm() {
    const [cuisine,setCuisine]=useState("");
    const [tags,setTags] = useState([]);
    const [totalTime,setTotalTime] = useState('');
-console.log(tags)
    const[url,setUrl] = useState("");
    const [prepTime,setPreptime] = useState(0);
    const [cookTime,setCookTime] = useState(0);
@@ -62,7 +64,8 @@ const handleSubmit = async(event) => {
     const res= await fetch(`${baseUrl}recipe/postRecipe`,{
       method: "POST",
       headers:{
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`,
       },
     body: JSON.stringify({title,url,ingredients,instructions,prepTime,cookTime,servings,mealType,cuisine})})
     setIsWaiting(false); 

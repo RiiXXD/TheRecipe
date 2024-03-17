@@ -118,7 +118,6 @@ try{
       profileImg = req.file.filename;
       console.log("checkInside",profileImg,req.file); // Use the filename saved by multer
   }
-  console.log("checkOutside",req.file); // Use the filename saved by multer
 
   const user = await UserModel.findById(userId);
   if (!user) {
